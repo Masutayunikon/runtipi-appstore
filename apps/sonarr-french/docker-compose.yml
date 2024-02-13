@@ -14,7 +14,7 @@ services:
       - ${APP_DATA_DIR}/data:/config
       - ${ROOT_FOLDER_HOST}/media:/media
     ports:
-      - ${APP_PORT}:8990
+      - ${APP_PORT}:8989
     restart: unless-stopped
     networks:
       - tipi_main_network
