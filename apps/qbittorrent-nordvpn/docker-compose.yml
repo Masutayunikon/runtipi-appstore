@@ -13,14 +13,14 @@ services:
       - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
       - SERVER_COUNTRIES=${SERVER_COUNTRIES}
     ports:
-      - ${APP_PORT}:${APP_PORT} # qBittorrent Web GUI
+      - ${APP_PORT}:${APP_PORT} # qBittorrent Web
       - 6881:6881 # qBittorrent
       - 6881:6881/udp # qBittorrent
     restart: unless-stopped
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:4.6.2
-    container_name: qbittorrent
+    container_name: qbittorrent-nordvpn
     environment:
       - PUID=1000
       - PGID=1000
