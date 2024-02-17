@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  nuxtapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GIT_REPO: "https://github.com/Masutayunikon/Portfolio.git"
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - GIT_REPO="https://github.com/Masutayunikon/Portfolio.git"
+    volumes:
+      - ./:/app
+      - pnpm-store:/pnpm/store
+
+volumes:
+  pnpm-store:

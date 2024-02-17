@@ -1,0 +1,16 @@
+{
+  "name": "Nuxt app",
+  "available": true,
+  "port": 3000,
+  "exposable": true,
+  "id": "nuxt",
+  "description": "Nuxt container to run a Nuxt app",
+  "tipi_version": 1,
+  "version": "1.25.1",
+  "categories": ["utilities"],
+  "short_desc": "",
+  "author": "",
+  "source": "",
+  "website": "",
+  "form_fields": []
+}
