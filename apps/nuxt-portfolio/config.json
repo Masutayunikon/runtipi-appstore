@@ -1,0 +1,81 @@
+{
+  "name": "Nuxt app",
+  "available": true,
+  "port": 3000,
+  "exposable": true,
+  "id": "nuxt-portfolio",
+  "description": "Nuxt container to run my portfolio",
+  "tipi_version": 1,
+  "version": "latest",
+  "categories": ["development"],
+  "short_desc": "My portfolio",
+  "author": "MasutaYunikon",
+  "source": "https://github.com/Masutayunikon/Portfolio",
+  "website": "https://yunikon.re",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Git Repository",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "GIT_REPO"
+    },
+    {
+      "type": "text",
+      "label": "State Secret",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "STATE_SECRET"
+    },
+    {
+      "type": "text",
+      "label": "Spotify Client ID",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "SPOTIFY_CLIENT_ID"
+    },
+    {
+      "type": "password",
+      "label": "Spotify Client Secret",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "SPOTIFY_CLIENT_SECRET"
+    },
+    {
+      "type": "text",
+      "label": "Spotify Redirect URI",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "SPOTIFY_REDIRECT_URI"
+    },
+    {
+      "type": "text",
+      "label": "GitHub Client ID",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "GITHUB_CLIENT_ID"
+    },
+    {
+      "type": "password",
+      "label": "GitHub Client Secret",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "GITHUB_CLIENT_SECRET"
+    },
+    {
+      "type": "text",
+      "label": "GitHub Redirect URI",
+      "max": 255,
+      "min": 10,
+      "required": true,
+      "env_variable": "GITHUB_REDIRECT_URI"
+    }
+  ]
+}
