@@ -18,3 +18,28 @@ services:
     restart: unless-stopped
     networks:
       - tipi_main_network
+    labels:
+      # Main
+      traefik.enable: true
+      traefik.http.middlewares.nuxt-portfolio-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.nuxt-portfolio.loadbalancer.server.port: 80
+      # Web
+      traefik.http.routers.nuxt-portfolio-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio-insecure.entrypoints: web
+      traefik.http.routers.nuxt-portfolio-insecure.service: nuxt-portfolio
+      traefik.http.routers.nuxt-portfolio-insecure.middlewares: nuxt-portfolio-web-redirect
+      # Websecure
+      traefik.http.routers.nuxt-portfolio.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio.entrypoints: websecure
+      traefik.http.routers.nuxt-portfolio.service: nuxt-portfolio
+      traefik.http.routers.nuxt-portfolio.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.nuxt-portfolio-local-insecure.rule: Host(`nuxt-portfolio.${LOCAL_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio-local-insecure.entrypoints: web
+      traefik.http.routers.nuxt-portfolio-local-insecure.service: nuxt-portfolio
+      traefik.http.routers.nuxt-portfolio-local-insecure.middlewares: nuxt-portfolio-web-redirect
+      # Local domain secure
+      traefik.http.routers.nuxt-portfolio-local.rule: Host(`nuxt-portfolio.${LOCAL_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio-local.entrypoints: websecure
+      traefik.http.routers.nuxt-portfolio-local.service: nuxt-portfolio
+      traefik.http.routers.nuxt-portfolio-local.tls: true
