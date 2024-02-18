@@ -22,7 +22,7 @@ services:
       # Main
       traefik.enable: true
       traefik.http.middlewares.nuxt-portfolio-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.nuxt-portfolio.loadbalancer.server.port: 80
+      traefik.http.services.nuxt-portfolio.loadbalancer.server.port: ${APP_PORT}
       # Web
       traefik.http.routers.nuxt-portfolio-insecure.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.nuxt-portfolio-insecure.entrypoints: web
