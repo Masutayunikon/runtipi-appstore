@@ -3,6 +3,16 @@ version: '3.8'
 services:
   nuxtapp:
     image: masutayunikon/nuxt-portfolio:latest
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${APP_PORT}
+      - NUXT_PUBLIC_STATE_SECRET=${NUXT_STATE_SECRET}
+      - NUXT_PUBLIC_GITHUB_CLIENT_ID=${NUXT_GITHUB_CLIENT_ID}
+      - NUXT_PUBLIC_GITHUB_CLIENT_SECRET=${NUXT_GITHUB_CLIENT_SECRET}
+      - NUXT_PUBLIC_GITHUB_REDIRECT_URI=${NUXT_GITHUB_REDIRECT_URI}
+      - NUXT_PUBLIC_SPOTIFY_CLIENT_ID=${NUXT_SPOTIFY_CLIENT_ID}
+      - NUXT_PUBLIC_SPOTIFY_CLIENT_SECRET=${NUXT_SPOTIFY_CLIENT_SECRET}
+      - NUXT_PUBLIC_SPOTIFY_REDIRECT_URI=${NUXT_SPOTIFY_REDIRECT_URI}
     build:
       context: .
       args:
@@ -39,3 +49,7 @@ services:
       traefik.http.routers.nuxt-portfolio-local.entrypoints: websecure
       traefik.http.routers.nuxt-portfolio-local.service: nuxt-portfolio
       traefik.http.routers.nuxt-portfolio-local.tls: true
+
+networks:
+  tipi_main_network:
+    external: false
