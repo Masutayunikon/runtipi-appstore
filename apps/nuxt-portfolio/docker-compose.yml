@@ -7,19 +7,8 @@ services:
       context: .
       args:
         GIT_REPO: ${GIT_REPO}
-        APP_DATA_DIR: ${APP_DATA_DIR}
     ports:
       - ${APP_PORT}:${APP_PORT}
-    environment:
-      - NODE_ENV=${NODE_ENV}
-      - PORT=${APP_PORT}
-      - NUXT_STATE_SECRET=${STATE_SECRET}
-      - NUXT_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
-      - NUXT_GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
-      - NUXT_GITHUB_REDIRECT_URI=${GITHUB_REDIRECT_URI}
-      - NUXT_SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
-      - NUXT_SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
-      - NUXT_SPOTIFY_REDIRECT_URI=${SPOTIFY_REDIRECT_URI}
     volumes:
       - ${APP_DATA_DIR}
     restart: unless-stopped
