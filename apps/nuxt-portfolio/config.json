@@ -27,7 +27,7 @@
       "max": 255,
       "min": 10,
       "required": true,
-      "env_variable": "STATE_SECRET"
+      "env_variable": "NUXT_STATE_SECRET"
     },
     {
       "type": "text",
@@ -35,7 +35,7 @@
       "max": 255,
       "min": 10,
       "required": true,
-      "env_variable": "SPOTIFY_CLIENT_ID"
+      "env_variable": "NUXT_SPOTIFY_CLIENT_ID"
     },
     {
       "type": "password",
@@ -43,7 +43,7 @@
       "max": 255,
       "min": 10,
       "required": true,
-      "env_variable": "SPOTIFY_CLIENT_SECRET"
+      "env_variable": "NUXT_SPOTIFY_CLIENT_SECRET"
     },
     {
       "type": "text",
@@ -51,7 +51,7 @@
       "max": 255,
       "min": 10,
       "required": true,
-      "env_variable": "SPOTIFY_REDIRECT_URI"
+      "env_variable": "NUXT_SPOTIFY_REDIRECT_URI"
     },
     {
       "type": "text",
@@ -59,7 +59,7 @@
       "max": 255,
       "min": 10,
       "required": true,
-      "env_variable": "GITHUB_CLIENT_ID"
+      "env_variable": "NUXT_GITHUB_CLIENT_ID"
     },
     {
       "type": "password",
@@ -67,7 +67,7 @@
       "max": 255,
       "min": 10,
       "required": true,
-      "env_variable": "GITHUB_CLIENT_SECRET"
+      "env_variable": "NUXT_GITHUB_CLIENT_SECRET"
     },
     {
       "type": "text",
@@ -75,7 +75,7 @@
       "max": 255,
       "min": 10,
       "required": true,
-      "env_variable": "GITHUB_REDIRECT_URI"
+      "env_variable": "NUXT_GITHUB_REDIRECT_URI"
     }
   ]
 }
