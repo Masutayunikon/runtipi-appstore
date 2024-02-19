@@ -49,7 +49,3 @@ services:
       traefik.http.routers.nuxt-portfolio-local.entrypoints: websecure
       traefik.http.routers.nuxt-portfolio-local.service: nuxt-portfolio
       traefik.http.routers.nuxt-portfolio-local.tls: true
-
-networks:
-  tipi_main_network:
-    external: false
