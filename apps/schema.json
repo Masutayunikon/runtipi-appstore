@@ -104,6 +104,9 @@
       "type": "string",
       "pattern": "^/[a-z0-9-_/]+$"
     },
+    "min_tipi_version": {
+      "type": "string"
+    },
     "form_fields": {
       "type": "array",
       "items": [
@@ -132,7 +135,29 @@
           "required": ["type", "label", "env_variable"]
         }
       ]
+    },
+    "dynamic_config": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "number"
+    },
+    "updated_at": {
+      "type": "number"
     }
   },
-  "required": ["name", "available", "port", "id", "tipi_version", "version", "categories", "description", "short_desc", "author", "source", "form_fields"]
+  "required": [
+    "name",
+    "available",
+    "port",
+    "id",
+    "tipi_version",
+    "version",
+    "categories",
+    "description",
+    "short_desc",
+    "author",
+    "source",
+    "form_fields"
+  ]
 }

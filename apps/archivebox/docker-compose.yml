@@ -1,6 +1,6 @@
 services:
   archivebox:
-    image: archivebox/archivebox:0.7.4
+    image: archivebox/archivebox:0.7.2
     restart: unless-stopped
     container_name: archivebox
     command: server --quick-init 0.0.0.0:8015
@@ -52,3 +52,4 @@ services:
       traefik.http.routers.archivebox-local.entrypoints: websecure
       traefik.http.routers.archivebox-local.service: archivebox
       traefik.http.routers.archivebox-local.tls: true
+      runtipi.managed: true
