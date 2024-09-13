@@ -1,0 +1,16 @@
+{
+  "name": "Arasgrasa",
+  "available": true,
+  "port": 3222,
+  "exposable": true,
+  "id": "arasgrasa",
+  "description": "Next container to run seo project",
+  "tipi_version": 1,
+  "version": "latest",
+  "categories": ["development"],
+  "short_desc": "Asargrasa epitech project",
+  "author": "MasutaYunikon",
+  "source": "https://github.com/Arasgrasa",
+  "website": "https://arasgrasa.tech",
+  "form_fields": []
+}

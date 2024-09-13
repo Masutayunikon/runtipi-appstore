@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  yunikon:
+    image: masutayunikon/arasgrasa:latest
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    ports:
+      - ${APP_PORT}:3000
+    volumes:
+      - ${APP_DATA_DIR}
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    labels: # Use your editors search and replace feature to replace all instances of "myapp" with your app name in the traefik labels
+      # Main
+      traefik.enable: true
+      traefik.http.middlewares.arasgrasa-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.arasgrasa.loadbalancer.server.port: 3000 # Should be the same as the app internal port so for this example 9443
+      # Web
+      traefik.http.routers.arasgrasa-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.arasgrasa-insecure.entrypoints: web
+      traefik.http.routers.arasgrasa-insecure.service: arasgrasa
+      traefik.http.routers.arasgrasa-insecure.middlewares: arasgrasa-web-redirect
+      # Websecure
+      traefik.http.routers.arasgrasa.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.arasgrasa.entrypoints: websecure
+      traefik.http.routers.arasgrasa.service: yunikon
+      traefik.http.routers.arasgrasa.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.arasgrasa-local-insecure.rule: Host(`arasgrasa.${LOCAL_DOMAIN}`)
+      traefik.http.routers.arasgrasa-local-insecure.entrypoints: web
+      traefik.http.routers.arasgrasa-local-insecure.service: arasgrasa
+      traefik.http.routers.arasgrasa-local-insecure.middlewares: arasgrasa-web-redirect
+      # Local domain secure
+      traefik.http.routers.arasgrasa-local.rule: Host(`arasgrasa.${LOCAL_DOMAIN}`)
+      traefik.http.routers.arasgrasa-local.entrypoints: websecure
+      traefik.http.routers.arasgrasa-local.service: arasgrasa
+      traefik.http.routers.arasgrasa-local.tls: true
