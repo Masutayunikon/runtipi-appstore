@@ -25,7 +25,7 @@ services:
       # Websecure
       traefik.http.routers.arasgrasa.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.arasgrasa.entrypoints: websecure
-      traefik.http.routers.arasgrasa.service: yunikon
+      traefik.http.routers.arasgrasa.service: arasgrasa
       traefik.http.routers.arasgrasa.tls.certresolver: myresolver
       # Local domain
       traefik.http.routers.arasgrasa-local-insecure.rule: Host(`arasgrasa.${LOCAL_DOMAIN}`)
