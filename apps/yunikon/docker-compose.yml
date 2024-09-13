@@ -28,12 +28,12 @@ services:
       traefik.http.routers.nuxt-portfolio.service: yunikon
       traefik.http.routers.nuxt-portfolio.tls.certresolver: myresolver
       # Local domain
-      traefik.http.routers.nuxt-portfolio-local-insecure.rule: Host(`insecure.${LOCAL_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio-local-insecure.rule: Host(`arasgrasa.${LOCAL_DOMAIN}`)
       traefik.http.routers.nuxt-portfolio-local-insecure.entrypoints: web
       traefik.http.routers.nuxt-portfolio-local-insecure.service: yunikon
       traefik.http.routers.nuxt-portfolio-local-insecure.middlewares: yunikon-web-redirect
       # Local domain secure
-      traefik.http.routers.nuxt-portfolio-local.rule: Host(`local.${LOCAL_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio-local.rule: Host(`arasgrasa.${LOCAL_DOMAIN}`)
       traefik.http.routers.nuxt-portfolio-local.entrypoints: websecure
       traefik.http.routers.nuxt-portfolio-local.service: yunikon
       traefik.http.routers.nuxt-portfolio-local.tls: true
