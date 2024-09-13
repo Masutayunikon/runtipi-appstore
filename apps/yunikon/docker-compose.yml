@@ -21,20 +21,20 @@ services:
       # Web
       traefik.http.routers.nuxt-portfolio-insecure.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.nuxt-portfolio-insecure.entrypoints: web
-      traefik.http.routers.nuxt-portfolio-insecure.service: next-asargrasa
-      traefik.http.routers.nuxt-portfolio-insecure.middlewares: next-asargrasa-web-redirect
+      traefik.http.routers.nuxt-portfolio-insecure.service: yunikon
+      traefik.http.routers.nuxt-portfolio-insecure.middlewares: yunikon-web-redirect
       # Websecure
       traefik.http.routers.nuxt-portfolio.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.nuxt-portfolio.entrypoints: websecure
-      traefik.http.routers.nuxt-portfolio.service: next-asargrasa
+      traefik.http.routers.nuxt-portfolio.service: yunikon
       traefik.http.routers.nuxt-portfolio.tls.certresolver: myresolver
       # Local domain
-      traefik.http.routers.nuxt-portfolio-local-insecure.rule: Host(`asargrasa.${LOCAL_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio-local-insecure.rule: Host(`insecure.${LOCAL_DOMAIN}`)
       traefik.http.routers.nuxt-portfolio-local-insecure.entrypoints: web
-      traefik.http.routers.nuxt-portfolio-local-insecure.service: next-asargrasa
-      traefik.http.routers.nuxt-portfolio-local-insecure.middlewares: next-asargrasa-web-redirect
+      traefik.http.routers.nuxt-portfolio-local-insecure.service: yunikon
+      traefik.http.routers.nuxt-portfolio-local-insecure.middlewares: yunikon-web-redirect
       # Local domain secure
-      traefik.http.routers.nuxt-portfolio-local.rule: Host(`asargrasa.${LOCAL_DOMAIN}`)
+      traefik.http.routers.nuxt-portfolio-local.rule: Host(`local.${LOCAL_DOMAIN}`)
       traefik.http.routers.nuxt-portfolio-local.entrypoints: websecure
-      traefik.http.routers.nuxt-portfolio-local.service: next-asargrasa
+      traefik.http.routers.nuxt-portfolio-local.service: yunikon
       traefik.http.routers.nuxt-portfolio-local.tls: true
