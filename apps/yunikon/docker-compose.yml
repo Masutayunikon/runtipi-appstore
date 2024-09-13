@@ -1,11 +1,10 @@
 version: '3.8'
 
 services:
-  nuxtapp:
+  yunikon:
     image: masutayunikon/yunikon:latest
     environment:
       - NODE_ENV=${NODE_ENV}
-      - PORT=${APP_PORT}
     ports:
       - ${APP_PORT}:3000
     volumes:
