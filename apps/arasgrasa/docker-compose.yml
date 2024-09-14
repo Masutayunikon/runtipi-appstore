@@ -5,6 +5,7 @@ services:
     image: masutayunikon/arasgrasa:latest
     environment:
       - NODE_ENV=${NODE_ENV}
+      - PORT=${APP_PORT}
     ports:
       - ${APP_PORT}:3000
     volumes:
@@ -16,7 +17,7 @@ services:
       # Main
       traefik.enable: true
       traefik.http.middlewares.arasgrasa-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.arasgrasa.loadbalancer.server.port: 3000 # Should be the same as the app internal port so for this example 9443
+      traefik.http.services.arasgrasa.loadbalancer.server.port: ${APP_PORT} # Should be the same as the app internal port so for this example 9443
       # Web
       traefik.http.routers.arasgrasa-insecure.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.arasgrasa-insecure.entrypoints: web
