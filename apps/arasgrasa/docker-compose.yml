@@ -13,29 +13,35 @@ services:
     restart: unless-stopped
     networks:
       - tipi_main_network
-    labels: # Use your editors search and replace feature to replace all instances of "myapp" with your app name in the traefik labels
+    labels:
       # Main
       traefik.enable: true
       traefik.http.middlewares.arasgrasa-web-redirect.redirectscheme.scheme: https
+      traefik.http.middlewares.arasgrasa-compress.compress: true # Enable compression middleware
       traefik.http.services.arasgrasa.loadbalancer.server.port: ${APP_PORT} # Should be the same as the app internal port so for this example 9443
-      traefik.http.middlewares.arasgrasa-web-redirect.compress: true
+
       # Web
       traefik.http.routers.arasgrasa-insecure.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.arasgrasa-insecure.entrypoints: web
       traefik.http.routers.arasgrasa-insecure.service: arasgrasa
-      traefik.http.routers.arasgrasa-insecure.middlewares: arasgrasa-web-redirect
+      traefik.http.routers.arasgrasa-insecure.middlewares: arasgrasa-web-redirect,arasgrasa-compress # Apply compression middleware
+
       # Websecure
       traefik.http.routers.arasgrasa.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.arasgrasa.entrypoints: websecure
       traefik.http.routers.arasgrasa.service: arasgrasa
       traefik.http.routers.arasgrasa.tls.certresolver: myresolver
+      traefik.http.routers.arasgrasa.middlewares: arasgrasa-compress # Apply compression middleware
+
       # Local domain
       traefik.http.routers.arasgrasa-local-insecure.rule: Host(`arasgrasa.${LOCAL_DOMAIN}`)
       traefik.http.routers.arasgrasa-local-insecure.entrypoints: web
       traefik.http.routers.arasgrasa-local-insecure.service: arasgrasa
-      traefik.http.routers.arasgrasa-local-insecure.middlewares: arasgrasa-web-redirect
+      traefik.http.routers.arasgrasa-local-insecure.middlewares: arasgrasa-web-redirect,arasgrasa-compress # Apply compression middleware
+
       # Local domain secure
       traefik.http.routers.arasgrasa-local.rule: Host(`arasgrasa.${LOCAL_DOMAIN}`)
       traefik.http.routers.arasgrasa-local.entrypoints: websecure
       traefik.http.routers.arasgrasa-local.service: arasgrasa
       traefik.http.routers.arasgrasa-local.tls: true
+      traefik.http.routers.arasgrasa-local.middlewares: arasgrasa-compress # Apply compression middleware
