@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "gluetun",
-      "image": "qmcgaw/gluetun",
+      "image": "qmcgaw/gluetun:latest",
       "environment": {
         "PGID": "1000",
         "PUID": "1000",
@@ -28,7 +28,7 @@
     },
     {
       "name": "qbittorrent-nordvpn",
-      "image": "lscr.io/linuxserver/qbittorrent:4.6.2",
+      "image": "lscr.io/linuxserver/qbittorrent:5.1.0",
       "environment": {
         "PUID": "1000",
         "PGID": "1000",

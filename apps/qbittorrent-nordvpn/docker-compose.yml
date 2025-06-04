@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   gluetun:
-    image: qmcgaw/gluetun
+    image: qmcgaw/gluetun:latest
     cap_add:
       - NET_ADMIN
     environment:
@@ -17,6 +17,8 @@ services:
       - 6881:6881 # qBittorrent
       - 6881:6881/udp # qBittorrent
     restart: unless-stopped
+    labels:
+      runtipi.managed: true
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:5.1.0
