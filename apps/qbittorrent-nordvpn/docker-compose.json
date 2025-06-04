@@ -19,6 +19,12 @@
           "hostPort": 6881,
           "tcp": false,
           "udp": true
+        },
+        {
+          "containerPort": 8153,
+          "hostPort": 8153,
+          "tcp": true,
+          "udp": false
         }
       ],
       "capAdd": [
