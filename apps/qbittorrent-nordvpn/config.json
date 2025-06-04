@@ -1,6 +1,6 @@
 {
   "$schema": "../app-info-schema.json",
-  "name": "Qbittorrent Nordvpn",
+  "name": "qBittorrent Nordvpn",
   "available": true,
   "exposable": true,
   "dynamic_config": true,
@@ -13,6 +13,7 @@
   "short_desc": "Fast, easy, and free BitTorrent client",
   "author": "Yunikon",
   "source": "https://github.com/qbittorrent/qBittorrent",
+  "supported_architectures": ["arm64", "amd64"],
   "form_fields": [
     {
       "type": "text",
@@ -44,10 +45,6 @@
       "required": true,
       "env_variable": "SERVER_COUNTRIES"
     }
-  ],
-  "supported_architectures": [
-    "arm64",
-    "amd64"
   ],
   "created_at": 1691943801422,
   "updated_at": 1748992181245
