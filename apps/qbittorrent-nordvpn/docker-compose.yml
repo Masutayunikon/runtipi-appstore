@@ -12,6 +12,8 @@ services:
       - OPENVPN_USER=${OPENVPN_USER}
       - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
       - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+    dns:
+      - ${DNS_IP}
     ports:
       - ${APP_PORT}:${APP_PORT} # qBittorrent Web
       - 6881:6881 # qBittorrent
@@ -22,8 +24,6 @@ services:
   qbittorrent-nordvpn:
     image: lscr.io/linuxserver/qbittorrent:5.1.0
     container_name: qbittorrent-nordvpn
-    dns:
-      - ${DNS_IP}
     environment:
       - PUID=1000
       - PGID=1000
