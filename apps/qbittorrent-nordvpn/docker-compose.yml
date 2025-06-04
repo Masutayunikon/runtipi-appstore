@@ -32,10 +32,6 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/config:/config
       - ${ROOT_FOLDER_HOST}/media/torrents:/media/torrents
-    ports:
-      - ${APP_PORT}:${APP_PORT}
-      - '6881:6881'
-      - 6881:6881/udp
     restart: unless-stopped
     network_mode: "service:gluetun"
     labels:
