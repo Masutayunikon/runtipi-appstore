@@ -27,6 +27,7 @@ services:
       - PGID=1000
       - TZ=${TZ}
       - WEBUI_PORT=${APP_PORT}
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     volumes:
       - ${APP_DATA_DIR}/data/config:/config
       - ${ROOT_FOLDER_HOST}/media/torrents:/media/torrents
