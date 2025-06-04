@@ -225,20 +225,26 @@ describe("App configs", () => {
     for (const app of apps) {
       test(app.id, () => {
         const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`).toString();
+        const dockerCompose = jsyaml.load(dockerComposeFile) as {
+          services: Record<string, { image?: string; container_name?: string }>;
+        };
 
-        const dockerCompose = jsyaml.load(dockerComposeFile) as { services: Record<string, { image: string }> };
+        // Trouver le service avec le bon container_name
+        const matchingService = Object.values(dockerCompose.services).find(
+          (s) => s.container_name === app.id
+        );
 
-        expect(dockerCompose.services[app.id]).toBeDefined();
-        expect(dockerCompose.services[app.id].image).toBeDefined();
+        expect(matchingService).toBeDefined();
+        expect(matchingService!.image).toBeDefined();
 
-        const dockerImage = dockerCompose.services[app.id].image;
-
+        const dockerImage = matchingService!.image!;
         const version = dockerImage.split(":")[1];
 
         expect(version).toContain(app.version);
       });
     }
   });
+
 
   describe("Each app should have network tipi_main_network", () => {
     const apps = getAppConfigs();
