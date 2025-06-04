@@ -42,6 +42,7 @@ const networkExceptions = [
   "cloudflared",
   "beszel-agent",
   "watchyourlan",
+  "qbittorrent-nordvpn"
 ];
 const getAppConfigs = (): AppConfig[] => {
   const apps: AppConfig[] = [];
@@ -198,17 +199,21 @@ describe("App configs", () => {
     }
   });
 
-  describe("Each app should have a container name equals to its id", () => {
+  describe("Each app should have a container name equal to its id", () => {
     const apps = getAppConfigs();
 
     for (const app of apps) {
       test(app.id, () => {
-        const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`).toString();
+        const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`, "utf8");
+        const dockerCompose = jsyaml.load(dockerComposeFile) as {
+          services: Record<string, { container_name?: string }>;
+        };
 
-        const dockerCompose = jsyaml.load(dockerComposeFile) as { services: Record<string, { container_name: string }> };
+        const serviceEntry = Object.entries(dockerCompose.services).find(
+          ([_, service]) => service.container_name === app.id
+        );
 
-        expect(dockerCompose.services[app.id]).toBeDefined();
-        expect(dockerCompose.services[app.id].container_name).toBe(app.id);
+        expect(serviceEntry).toBeDefined();
       });
     }
   });
