@@ -12,8 +12,6 @@ services:
       - OPENVPN_USER=${OPENVPN_USER}
       - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
       - SERVER_COUNTRIES=${SERVER_COUNTRIES}
-    dns:
-      - ${DNS_IP}
     ports:
       - ${APP_PORT}:${APP_PORT} # qBittorrent Web
       - 6881:6881 # qBittorrent
