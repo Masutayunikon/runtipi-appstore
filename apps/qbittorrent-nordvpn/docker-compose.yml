@@ -38,7 +38,7 @@ services:
       - 6881:6881/udp
     restart: unless-stopped
     networks:
-      - service:gluetun
+      - gluetun
     labels:
       traefik.enable: true
       traefik.http.middlewares.qbittorrent-web-redirect.redirectscheme.scheme: https
