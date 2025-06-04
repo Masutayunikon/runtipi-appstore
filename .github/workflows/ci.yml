@@ -7,18 +7,19 @@ on:
 
 jobs:
   ci:
-    if: "!contains(github.head_ref, 'renovate/')"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - uses: pnpm/action-setup@v4.0.0
+      - uses: pnpm/action-setup@v4.1.0
         name: Install pnpm
         id: pnpm-install
         with:
@@ -45,4 +46,4 @@ jobs:
         run: pnpm test
 
       - name: Run linter
-        run: pnpm run lint
+        run: pnpm run lint:ci

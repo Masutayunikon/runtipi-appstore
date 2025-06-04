@@ -2,14 +2,14 @@
   "services": [
     {
       "name": "lubelogger",
-      "image": "ghcr.io/hargata/lubelogger:v1.3.6",
+      "image": "ghcr.io/hargata/lubelogger:v1.4.7",
       "internalPort": 8080,
       "isMain": true,
       "volumes": [
         {
           "hostPath": "/etc/localtime",
           "containerPath": "/etc/localtime",
-          "readonly": true
+          "readOnly": true
         },
         {
           "hostPath": "${APP_DATA_DIR}/data/config",
@@ -45,7 +45,7 @@
         "LOGGING__LOGLEVEL__DEFAULT": "Error",
         "LC_ALL": "${LUBELOGGER_LOCALE:-en_US.UTF-8}",
         "LANG": "${LUBELOGGER_LOCALE:-en_US.UTF-8}",
-        "POSTGRES_CONNECTION": "Host='lubelogger-db:5432;Username=tipi;Password=tipi;Database=lubelogger;",
+        "POSTGRES_CONNECTION": "Host='lubelogger-db:5432';Username=tipi;Password=tipi;Database=lubelogger;",
         "EnableAuth": "${LUBELOGGER_ENABLE_AUTH:-false}",
         "UserNameHash": "${LUBELOGGER_USERNAME_HASH}",
         "UserPasswordHash": "${LUBELOGGER_PASSWORD_HASH}",
@@ -76,7 +76,7 @@
         {
           "hostPath": "${APP_DATA_DIR}/data/init/init-db.sh",
           "containerPath": "/docker-entrypoint-initdb.d/init-db.sh",
-          "readonly": true
+          "readOnly": true
         },
         {
           "hostPath": "${APP_DATA_DIR}/data/postgres",
@@ -90,11 +90,12 @@
         "POSTGRES_PASSWORD": "tipi"
       },
       "healthCheck": {
-        "test": ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"],
+        "test": "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB",
         "retries": 3,
         "interval": "30s",
         "timeout": "10s"
       }
     }
-  ]
+  ],
+  "$schema": "../dynamic-compose-schema.json"
 }

@@ -1,13 +1,14 @@
 {
-  "$schema": "../schema.json",
+  "$schema": "../app-info-schema.json",
   "name": "Revolt Chat",
   "port": 8272,
   "available": true,
   "exposable": true,
+  "dynamic_config": true,
   "force_expose": true,
   "generate_vapid_keys": true,
   "id": "revolt",
-  "tipi_version": 13,
+  "tipi_version": 16,
   "version": "20230810-3",
   "categories": ["media"],
   "description": "Open source user-first chat platform.",
@@ -92,5 +93,7 @@
   ],
   "supported_architectures": ["amd64"],
   "created_at": 1691943801422,
-  "updated_at": 1723566284000
+  "updated_at": 1742038579720,
+  "force_pull": false,
+  "deprecated": true
 }

@@ -1,14 +1,15 @@
 {
-  "$schema": "../schema.json",
+  "$schema": "../app-info-schema.json",
   "name": "Electrs",
   "available": true,
   "exposable": false,
+  "dynamic_config": true,
   "no_gui": false,
   "port": 3006,
   "id": "electrs",
   "description": "Electrum server",
-  "tipi_version": 1,
-  "version": "0.10.2",
+  "tipi_version": 5,
+  "version": "v0.10.9",
   "categories": ["finance"],
   "short_desc": "Electrum server",
   "author": "romanz",
@@ -31,5 +32,5 @@
     }
   ],
   "created_at": 1691943801422,
-  "updated_at": 1723566283000
+  "updated_at": 1748689844784
 }

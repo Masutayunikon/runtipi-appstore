@@ -1,10 +1,12 @@
-version: "3.7"
+version: '3.7'
 services:
   bookstack:
-    image: lscr.io/linuxserver/bookstack:24.05.20240520
+    image: lscr.io/linuxserver/bookstack:25.05.20250531
     container_name: bookstack
     environment:
+      - TZ=${TZ}
       - APP_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - APP_KEY=base64:${APP_KEY}
       - DB_HOST=bookstack-db
       - DB_USERNAME=tipi
       - DB_PASSWORD=${BOOKSTACK_DB_PASS}
@@ -21,26 +23,21 @@ services:
     networks:
       - tipi_main_network
     labels:
-      # Main
       traefik.enable: true
       traefik.http.middlewares.bookstack-web-redirect.redirectscheme.scheme: https
       traefik.http.services.bookstack.loadbalancer.server.port: 80
-      # Web
       traefik.http.routers.bookstack-insecure.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.bookstack-insecure.entrypoints: web
       traefik.http.routers.bookstack-insecure.service: bookstack
       traefik.http.routers.bookstack-insecure.middlewares: bookstack-web-redirect
-      # Websecure
       traefik.http.routers.bookstack.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.bookstack.entrypoints: websecure
       traefik.http.routers.bookstack.service: bookstack
       traefik.http.routers.bookstack.tls.certresolver: myresolver
-      # Local domain
       traefik.http.routers.bookstack-local-insecure.rule: Host(`bookstack.${LOCAL_DOMAIN}`)
       traefik.http.routers.bookstack-local-insecure.entrypoints: web
       traefik.http.routers.bookstack-local-insecure.service: bookstack
       traefik.http.routers.bookstack-local-insecure.middlewares: bookstack-web-redirect
-      # Local domain secure
       traefik.http.routers.bookstack-local.rule: Host(`bookstack.${LOCAL_DOMAIN}`)
       traefik.http.routers.bookstack-local.entrypoints: websecure
       traefik.http.routers.bookstack-local.service: bookstack
@@ -51,6 +48,7 @@ services:
     container_name: bookstack-db
     environment:
       - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${ROOT_ACCESS_PASSWORD}
       - MYSQL_DATABASE=bookstackapp
       - MYSQL_USER=tipi
       - MYSQL_PASSWORD=${BOOKSTACK_DB_PASS}
