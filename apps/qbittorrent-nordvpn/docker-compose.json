@@ -10,7 +10,8 @@
         "VPN_TYPE": "${VPN_TYPE}",
         "OPENVPN_USER": "${OPENVPN_USER}",
         "OPENVPN_PASSWORD": "${OPENVPN_PASSWORD}",
-        "SERVER_COUNTRIES": "${SERVER_COUNTRIES}"
+        "SERVER_COUNTRIES": "${SERVER_COUNTRIES}",
+        "DOCKER_MODS": "ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest"
       },
       "internalPort": 6881,
       "addPorts": [
