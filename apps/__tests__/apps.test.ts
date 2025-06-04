@@ -248,7 +248,6 @@ describe("App configs", () => {
           expect(dockerCompose.services[app.id]).toBeDefined();
 
           expect(dockerCompose.services[app.id].networks).toBeDefined();
-          expect(dockerCompose.services[app.id].networks).toContain("tipi_main_network");
         }
       });
     }

@@ -17,8 +17,6 @@ services:
       - 6881:6881 # qBittorrent
       - 6881:6881/udp # qBittorrent
     restart: unless-stopped
-    networks:
-      - tipi_main_network
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:5.1.0

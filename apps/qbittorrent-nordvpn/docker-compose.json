@@ -24,8 +24,7 @@
       ],
       "capAdd": [
         "NET_ADMIN"
-      ],
-      "isMain": true
+      ]
     },
     {
       "name": "qbittorrent-nordvpn",
@@ -51,7 +50,9 @@
           "shared": false,
           "private": false
         }
-      ]
+      ],
+      "networkMode": "service:gluetun",
+      "isMain": true
     }
   ]
 }
