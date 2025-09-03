@@ -20,7 +20,7 @@ services:
     labels:
       runtipi.managed: true
   qbittorrent-nordvpn:
-    image: lscr.io/linuxserver/qbittorrent:5.1.0
+    image: lscr.io/linuxserver/qbittorrent:5.1.2
     container_name: qbittorrent-nordvpn
     environment:
       - PUID=1000

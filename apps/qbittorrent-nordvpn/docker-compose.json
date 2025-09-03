@@ -34,7 +34,7 @@
     },
     {
       "name": "qbittorrent-nordvpn",
-      "image": "lscr.io/linuxserver/qbittorrent:4.6.2",
+      "image": "lscr.io/linuxserver/qbittorrent:5.1.2",
       "environment": {
         "PUID": "1000",
         "PGID": "1000",
