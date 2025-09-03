@@ -1,0 +1,36 @@
+services:
+  prowlarr:
+    container_name: prowlarr
+    image: ghcr.io/linuxserver/prowlarr:2.0.5
+    environment:
+      - TZ=${TZ}
+    dns:
+      - ${DNS_IP}
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config
+    ports:
+      - ${APP_PORT}:9696
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.prowlarr-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.prowlarr.loadbalancer.server.port: 9696
+      traefik.http.routers.prowlarr-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.prowlarr-insecure.entrypoints: web
+      traefik.http.routers.prowlarr-insecure.service: prowlarr
+      traefik.http.routers.prowlarr-insecure.middlewares: prowlarr-web-redirect
+      traefik.http.routers.prowlarr.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.prowlarr.entrypoints: websecure
+      traefik.http.routers.prowlarr.service: prowlarr
+      traefik.http.routers.prowlarr.tls.certresolver: myresolver
+      traefik.http.routers.prowlarr-local-insecure.rule: Host(`prowlarr.${LOCAL_DOMAIN}`)
+      traefik.http.routers.prowlarr-local-insecure.entrypoints: web
+      traefik.http.routers.prowlarr-local-insecure.service: prowlarr
+      traefik.http.routers.prowlarr-local-insecure.middlewares: prowlarr-web-redirect
+      traefik.http.routers.prowlarr-local.rule: Host(`prowlarr.${LOCAL_DOMAIN}`)
+      traefik.http.routers.prowlarr-local.entrypoints: websecure
+      traefik.http.routers.prowlarr-local.service: prowlarr
+      traefik.http.routers.prowlarr-local.tls: true
+      runtipi.managed: true
