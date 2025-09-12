@@ -4,7 +4,7 @@ services:
     image: stalwartlabs/stalwart:v0.13.3
     container_name: stalwart-mail
     volumes:
-      - ${APP_DATA_DIR}/data:/opt/stalwart-mail
+      - ${APP_DATA_DIR}/data/mail:/opt/stalwart
     restart: unless-stopped
     networks:
       - tipi_main_network
