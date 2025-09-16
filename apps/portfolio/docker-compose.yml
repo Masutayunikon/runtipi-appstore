@@ -1,6 +1,6 @@
 services:
   portfolio:
-    image: masutayunikon/portfolio:v1.0.1
+    image: masutayunikon/portfolio:latest
     container_name: portfolio
     restart: unless-stopped
     environment:
