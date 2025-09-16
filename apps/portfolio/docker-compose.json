@@ -1,0 +1,20 @@
+{
+  "$schema": "../dynamic-compose-schema.json",
+  "services": [
+    {
+      "name": "portfolio",
+      "image": "masutayunikon/portfolio:1.0.1",
+      "environment": {
+        "NODE_ENV": "production",
+        "NUXT_SMTP_HOST": "${NUXT_SMTP_HOST}",
+        "NUXT_SMTP_PORT": "${NUXT_SMTP_PORT}",
+        "NUXT_SMTP_USER": "${NUXT_SMTP_USER}",
+        "NUXT_SMTP_PASS": "${NUXT_SMTP_PASS}",
+        "NUXT_SMTP_TO_EMAIL": "${NUXT_SMTP_TO_EMAIL}",
+        "NUXT_FROM_EMAIL": "${NUXT_FROM_EMAIL}"
+      },
+      "internalPort": 3000,
+      "isMain": true
+    }
+  ]
+}

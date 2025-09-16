@@ -1,0 +1,58 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Portfolio",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 3000,
+  "id": "portfolio",
+  "tipi_version": 34,
+  "version": "1.0.1",
+  "categories": ["utilities", "development"],
+  "description": "Nuxt container to run my portfolio",
+  "short_desc": "My portfolio",
+  "author": "MasutaYunikon",
+  "source": "https://github.com/Masutayunikon/Portfolio-w7",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "SMTP Host",
+      "required": true,
+      "env_variable": "NUXT_SMTP_HOST"
+    },
+    {
+      "type": "number",
+      "label": "SMTP Port",
+      "required": true,
+      "env_variable": "NUXT_SMTP_PORT",
+      "default": 587
+    },
+    {
+      "type": "text",
+      "label": "SMTP Username",
+      "required": true,
+      "env_variable": "NUXT_SMTP_USER"
+    },
+    {
+      "type": "password",
+      "label": "SMTP Password",
+      "required": true,
+      "env_variable": "NUXT_SMTP_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Recipient email (contact inbox)",
+      "required": true,
+      "env_variable": "NUXT_SMTP_TO_EMAIL"
+    },
+    {
+      "type": "text",
+      "label": "From email (sender)",
+      "required": true,
+      "env_variable": "NUXT_FROM_EMAIL"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1691943801422,
+  "updated_at": 1752088173009
+}
