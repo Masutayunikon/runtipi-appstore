@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "portfolio",
-      "image": "masutayunikon/portfolio:1.0.1",
+      "image": "masutayunikon/portfolio:v1.0.1",
       "environment": {
         "NODE_ENV": "production",
         "NUXT_SMTP_HOST": "${NUXT_SMTP_HOST}",
