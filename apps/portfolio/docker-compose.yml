@@ -20,4 +20,27 @@ services:
     ports:
       - "${APP_PORT}:3000"
 
+    networks:
+      - tipi_main_network
 
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.portfolio-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.portfolio.loadbalancer.server.port: 3000
+      traefik.http.routers.portfolio-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.portfolio-insecure.entrypoints: web
+      traefik.http.routers.portfolio-insecure.service: portfolio
+      traefik.http.routers.portfolio-insecure.middlewares: portfolio-web-redirect
+      traefik.http.routers.portfolio.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.portfolio.entrypoints: websecure
+      traefik.http.routers.portfolio.service: portfolio
+      traefik.http.routers.portfolio.tls.certresolver: myresolver
+      traefik.http.routers.portfolio-local-insecure.rule: Host(`portfolio.${LOCAL_DOMAIN}`)
+      traefik.http.routers.portfolio-local-insecure.entrypoints: web
+      traefik.http.routers.portfolio-local-insecure.service: portfolio
+      traefik.http.routers.portfolio-local-insecure.middlewares: portfolio-web-redirect
+      traefik.http.routers.portfolio-local.rule: Host(`portfolio.${LOCAL_DOMAIN}`)
+      traefik.http.routers.portfolio-local.entrypoints: websecure
+      traefik.http.routers.portfolio-local.service: portfolio
+      traefik.http.routers.portfolio-local.tls: true
+      runtipi.managed: true
