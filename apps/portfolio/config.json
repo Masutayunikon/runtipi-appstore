@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "port": 3000,
   "id": "portfolio",
-  "tipi_version": 34,
+  "tipi_version": 35,
   "version": "latest",
   "categories": ["utilities", "development"],
   "description": "Nuxt container to run my portfolio",
