@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "ygege",
-      "image": "uwucode/ygege:latest",
+      "image": "uwucode/ygege:0.8.0",
       "environment": [
         {
           "key": "YGG_USERNAME",
