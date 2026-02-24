@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  ygege:
+    image: uwucode/ygege:latest
+    container_name: ygege
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:8715
+    volumes:
+      - ${APP_DATA_DIR}/sessions           # Volume nommé (recommandé)
+    environment:
+      YGG_USERNAME: ${YGG_USERNAME}
+      YGG_PASSWORD: ${YGG_PASSWORD}
+      LOG_LEVEL: "debug"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:$${BIND_PORT:-8715}/health || exit 1"]
+      interval: 1m30s
+      timeout: 20s
+      retries: 3
+      start_period: 10s
+    networks:
+      - tipi_main_network
+    labels:
+      # Main
+      traefik.enable: true
+      traefik.http.middlewares.ygege-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.ygege.loadbalancer.server.port: 5690
+      # Web
+      traefik.http.routers.ygege-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.ygege-insecure.entrypoints: web
+      traefik.http.routers.ygege-insecure.service: ygege
+      traefik.http.routers.ygege-insecure.middlewares: ygege-web-redirect
+      # Websecure
+      traefik.http.routers.ygege.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.ygege.entrypoints: websecure
+      traefik.http.routers.ygege.service: ygege
+      traefik.http.routers.ygege.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.ygege-local-insecure.rule: Host(`ygege.${LOCAL_DOMAIN}`)
+      traefik.http.routers.ygege-local-insecure.entrypoints: web
+      traefik.http.routers.ygege-local-insecure.service: ygege
+      traefik.http.routers.ygege-local-insecure.middlewares: ygege-web-redirect
+      # Local domain secure
+      traefik.http.routers.ygege-local.rule: Host(`ygege.${LOCAL_DOMAIN}`)
+      traefik.http.routers.ygege-local.entrypoints: websecure
+      traefik.http.routers.ygege-local.service: ygege
+      traefik.http.routers.ygege-local.tls: true
+      runtipi.managed: true
