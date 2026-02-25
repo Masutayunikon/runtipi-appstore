@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "ygege",
-      "image": "pierreyves258/ygege:lduplain",
+      "image": "uwucode/ygege:0.8.1",
       "environment": [
         {
           "key": "YGG_USERNAME",
@@ -12,10 +12,6 @@
         {
           "key": "YGG_PASSWORD",
           "value": "${YGG_PASSWORD}"
-        },
-        {
-          "key": "FLARESOLVERR_URL ",
-          "value": "${FLARESOLVERR_URL}"
         },
         {
           "key": "LOG_LEVEL",

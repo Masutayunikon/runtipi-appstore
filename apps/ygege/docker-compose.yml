@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   ygege:
-    image: pierreyves258/ygege:lduplain
+    image: uwucode/ygege:0.8.1
     container_name: ygege
     restart: unless-stopped
     ports:
@@ -12,7 +12,6 @@ services:
     environment:
       YGG_USERNAME: ${YGG_USERNAME}
       YGG_PASSWORD: ${YGG_PASSWORD}
-      FLARESOLVERR_URL: ${FLARESOLVERR_URL}
       LOG_LEVEL: "debug"
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:$${BIND_PORT:-8715}/health || exit 1"]
