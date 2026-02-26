@@ -7,7 +7,7 @@
   "dynamic_config": true,
   "id": "ygege",
   "tipi_version": 5,
-  "version": "0.8.1",
+  "version": "1.0.0",
   "categories": ["utilities"],
   "description": "Ygg",
   "short_desc": "ygg api",
@@ -15,6 +15,12 @@
   "source": "https://github.com/UwUDev/ygege",
   "website": "https://ygege.lila.ws/",
   "form_fields": [
+    {
+      "type": "text",
+      "label": "Flaresolver URL",
+      "required": false,
+      "env_variable": "FLARESOLVERR_URL"
+    },
     {
       "type": "text",
       "label": "Ygg Username",

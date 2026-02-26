@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   ygege:
-    image: uwucode/ygege:0.8.1
+    image: masutayunikon/ygege:1.0.0
     container_name: ygege
     restart: unless-stopped
     ports:
@@ -10,6 +10,7 @@ services:
     volumes:
       - ${APP_DATA_DIR}/sessions           # Volume nommé (recommandé)
     environment:
+      FLARESOLVERR_URL: ${FLARESOLVERR_URL}
       YGG_USERNAME: ${YGG_USERNAME}
       YGG_PASSWORD: ${YGG_PASSWORD}
       LOG_LEVEL: "debug"
