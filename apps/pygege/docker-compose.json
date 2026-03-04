@@ -13,7 +13,11 @@
           "shared": false,
           "private": false
         }
-      ]
+      ],
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
     }
   ]
 }
