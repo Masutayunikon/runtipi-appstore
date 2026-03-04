@@ -4,6 +4,12 @@
     {
       "name": "pygege",
       "image": "masutayunikon/pygege:latest",
+      "environment": [
+        {
+          "key": "TMDB_API_KEY",
+          "value": "${TMDB_API_KEY}"
+        }
+      ],
       "internalPort": 8000,
       "volumes": [
         {
