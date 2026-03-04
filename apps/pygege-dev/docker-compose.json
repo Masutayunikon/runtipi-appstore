@@ -14,9 +14,12 @@
           "private": false
         }
       ],
-      "environment": {
-        "TMDB_API_KEY": "${TMDB_API_KEY}"
-      },
+      "environment": [
+        {
+          "key": "TMDB_API_KEY",
+          "value": "${TMDB_API_KEY}"
+        }
+      ],
       "isMain": true,
       "extraLabels": {
         "runtipi.managed": true
