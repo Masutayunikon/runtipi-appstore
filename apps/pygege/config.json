@@ -6,7 +6,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "pygege",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "v1.0.2",
   "categories": ["utilities"],
   "description": "Torznab API for YGG Torrent via Nostr relay",
