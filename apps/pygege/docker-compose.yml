@@ -1,6 +1,6 @@
 services:
   pygege:
-    image: masutayunikon/pygege:v1.0.2
+    image: masutayunikon/pygege:v1.0.3
     container_name: pygege
     volumes:
       - ${APP_DATA_DIR}/data:/app/data

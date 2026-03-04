@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "pygege",
-      "image": "masutayunikon/pygege:v1.0.2",
+      "image": "masutayunikon/pygege:v1.0.3",
       "internalPort": 8000,
       "volumes": [
         {
