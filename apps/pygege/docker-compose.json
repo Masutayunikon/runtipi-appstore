@@ -3,12 +3,12 @@
   "services": [
     {
       "name": "pygege",
-      "image": "masutayunikon/pygege:v1.0.1",
+      "image": "masutayunikon/pygege:v1.0.2",
       "internalPort": 8000,
       "volumes": [
         {
-          "hostPath": "${APP_DATA_DIR}/api_key.txt",
-          "containerPath": "/app/api_key.txt",
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data",
           "readOnly": false,
           "shared": false,
           "private": false

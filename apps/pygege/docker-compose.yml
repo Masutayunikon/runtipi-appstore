@@ -1,9 +1,9 @@
 services:
   pygege:
-    image: masutayunikon/pygege:v1.0.1
+    image: masutayunikon/pygege:v1.0.2
     container_name: pygege
     volumes:
-      - ${APP_DATA_DIR}/api_key.txt:/app/api_key.txt
+      - ${APP_DATA_DIR}/data:/app/data
     ports:
       - ${APP_PORT}:8000
     restart: unless-stopped
