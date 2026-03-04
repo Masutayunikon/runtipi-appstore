@@ -13,26 +13,26 @@ services:
     labels:
       # Main
       traefik.enable: true
-      traefik.http.middlewares.wizarr-web-redirect.redirectscheme.scheme: https
-      traefik.http.services.wizarr.loadbalancer.server.port: 5690
+      traefik.http.middlewares.pygege-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.pygege.loadbalancer.server.port: 5690
       # Web
-      traefik.http.routers.wizarr-insecure.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.wizarr-insecure.entrypoints: web
-      traefik.http.routers.wizarr-insecure.service: wizarr
-      traefik.http.routers.wizarr-insecure.middlewares: wizarr-web-redirect
+      traefik.http.routers.pygege-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pygege-insecure.entrypoints: web
+      traefik.http.routers.pygege-insecure.service: pygege
+      traefik.http.routers.pygege-insecure.middlewares: pygege-web-redirect
       # Websecure
-      traefik.http.routers.wizarr.rule: Host(`${APP_DOMAIN}`)
-      traefik.http.routers.wizarr.entrypoints: websecure
-      traefik.http.routers.wizarr.service: wizarr
-      traefik.http.routers.wizarr.tls.certresolver: myresolver
+      traefik.http.routers.pygege.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pygege.entrypoints: websecure
+      traefik.http.routers.pygege.service: pygege
+      traefik.http.routers.pygege.tls.certresolver: myresolver
       # Local domain
-      traefik.http.routers.wizarr-local-insecure.rule: Host(`wizarr.${LOCAL_DOMAIN}`)
-      traefik.http.routers.wizarr-local-insecure.entrypoints: web
-      traefik.http.routers.wizarr-local-insecure.service: wizarr
-      traefik.http.routers.wizarr-local-insecure.middlewares: wizarr-web-redirect
+      traefik.http.routers.pygege-local-insecure.rule: Host(`pygege.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pygege-local-insecure.entrypoints: web
+      traefik.http.routers.pygege-local-insecure.service: pygege
+      traefik.http.routers.pygege-local-insecure.middlewares: pygege-web-redirect
       # Local domain secure
-      traefik.http.routers.wizarr-local.rule: Host(`wizarr.${LOCAL_DOMAIN}`)
-      traefik.http.routers.wizarr-local.entrypoints: websecure
-      traefik.http.routers.wizarr-local.service: wizarr
-      traefik.http.routers.wizarr-local.tls: true
+      traefik.http.routers.pygege-local.rule: Host(`pygege.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pygege-local.entrypoints: websecure
+      traefik.http.routers.pygege-local.service: pygege
+      traefik.http.routers.pygege-local.tls: true
       runtipi.managed: true
