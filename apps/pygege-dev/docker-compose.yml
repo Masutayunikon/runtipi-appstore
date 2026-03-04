@@ -6,6 +6,9 @@ services:
       - ${APP_DATA_DIR}/data:/app/data
     ports:
       - ${APP_PORT}:8000
+    environment:
+      - TMDB_API_KEY=${TMDB_API_KEY}
+
     restart: unless-stopped
 
     networks:
