@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "pygege",
+      "image": "masutayunikon/pygege:1.0.1",
+      "internalPort": 8000,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/api_key.txt",
+          "containerPath": "/app/api_key.txt",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        }
+      ]
+    }
+  ]
+}

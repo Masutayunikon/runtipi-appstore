@@ -1,0 +1,20 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "PyGégé",
+  "port": 8716,
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "pygege",
+  "tipi_version": 1,
+  "version": "1.0.0",
+  "categories": ["utilities"],
+  "description": "Torznab API for YGG Torrent via Nostr relay",
+  "short_desc": "YGG Torznab API",
+  "author": "https://github.com/masutayunikon",
+  "source": "https://github.com/masutayunikon/pygege",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1772000000000,
+  "updated_at": 1772000000000
+}
