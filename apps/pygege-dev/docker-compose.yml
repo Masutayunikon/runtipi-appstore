@@ -1,0 +1,38 @@
+services:
+  pygege-dev:
+    image: masutayunikon/pygege:dev
+    container_name: pygege-dev
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    ports:
+      - ${APP_PORT}:8000
+    restart: unless-stopped
+
+    networks:
+      - tipi_main_network
+    labels:
+      # Main
+      traefik.enable: true
+      traefik.http.middlewares.pygege-dev-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.pygege-dev.loadbalancer.server.port: 5690
+      # Web
+      traefik.http.routers.pygege-dev-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pygege-dev-insecure.entrypoints: web
+      traefik.http.routers.pygege-dev-insecure.service: pygege-dev
+      traefik.http.routers.pygege-dev-insecure.middlewares: pygege-dev-web-redirect
+      # Websecure
+      traefik.http.routers.pygege-dev.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.pygege-dev.entrypoints: websecure
+      traefik.http.routers.pygege-dev.service: pygege-dev
+      traefik.http.routers.pygege-dev.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.pygege-dev-local-insecure.rule: Host(`pygege-dev.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pygege-dev-local-insecure.entrypoints: web
+      traefik.http.routers.pygege-dev-local-insecure.service: pygege-dev
+      traefik.http.routers.pygege-dev-local-insecure.middlewares: pygege-dev-web-redirect
+      # Local domain secure
+      traefik.http.routers.pygege-dev-local.rule: Host(`pygege-dev.${LOCAL_DOMAIN}`)
+      traefik.http.routers.pygege-dev-local.entrypoints: websecure
+      traefik.http.routers.pygege-dev-local.service: pygege-dev
+      traefik.http.routers.pygege-dev-local.tls: true
+      runtipi.managed: true
