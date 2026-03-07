@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "pygege",
-      "image": "masutayunikon/pygege:1.3.0",
+      "image": "masutayunikon/pygege:latest",
       "environment": [
         {
           "key": "TMDB_API_KEY",
