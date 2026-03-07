@@ -39,7 +39,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           APPSTORE_PATH: ${{ github.workspace }}
-        run: python scripts/update_apps.py
+        run: python update_apps.py
 
       - name: Create Pull Request
         if: steps.updater.outputs.updated == 'true'
