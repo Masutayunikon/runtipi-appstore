@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "ygege",
-      "image": "masutayunikon/ygege:1.0.0",
+      "image": "masutayunikon/ygege:0.8.0",
       "environment": [
         {
           "key": "FLARESOLVERR_URL",

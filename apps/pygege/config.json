@@ -6,8 +6,8 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "pygege",
-  "tipi_version": 6,
-  "version": "latest",
+  "tipi_version": 7,
+  "version": "1.3.0",
   "categories": ["utilities"],
   "description": "Torznab API for YGG Torrent via Nostr relay",
   "short_desc": "YGG Torznab API",
@@ -25,5 +25,5 @@
   ],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1772000000000,
-  "updated_at": 1772000000000
+  "updated_at": 1772844577493
 }
