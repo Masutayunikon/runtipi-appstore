@@ -28,9 +28,7 @@
           "udp": false
         }
       ],
-      "capAdd": [
-        "NET_ADMIN"
-      ]
+      "capAdd": ["NET_ADMIN"]
     },
     {
       "name": "qbittorrent-nordvpn",
