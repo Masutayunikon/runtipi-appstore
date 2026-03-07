@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout repo
@@ -30,10 +31,23 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
 
       - name: Run updater
+        id: updater
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           APPSTORE_PATH: ${{ github.workspace }}
-        run: python update_apps.py
+        run: python scripts/update_apps.py
+
+      - name: Create Pull Request
+        if: steps.updater.outputs.updated == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          branch: auto-update/app-versions
+          delete-branch: true
+          title: "chore: auto-update app versions"
+          body: ${{ steps.updater.outputs.pr_body }}
+          labels: auto-update

@@ -18,22 +18,12 @@ from datetime import datetime, timezone
 # CONFIGURATION
 # ──────────────────────────────────────────────
 
-# Chemin racine de ton fork du community-app-store
-APPSTORE_PATH = Path(os.environ.get("APPSTORE_PATH", "/path/to/your/appstore"))
-
-# Token GitHub (recommandé : évite le rate-limit de 60 req/h non authentifié)
-# Créer sur https://github.com/settings/tokens (aucun scope nécessaire pour les repos publics)
-GITHUB_TOKEN = os.environ.get("GH_TOKEN", "")
-
-# Webhook Discord (laisser vide pour désactiver)
+APPSTORE_PATH      = Path(os.environ.get("APPSTORE_PATH", "."))
+GITHUB_TOKEN       = os.environ.get("GH_TOKEN", "")
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL", "")
-
-# Commit & push automatique
-AUTO_COMMIT = True
+AUTO_COMMIT        = True
 GIT_COMMIT_MESSAGE = "chore: auto-update app versions [{date}]"
-
-# Afficher les apps déjà à jour
-VERBOSE = False
+VERBOSE            = False
 
 # ──────────────────────────────────────────────
 
@@ -46,16 +36,13 @@ def get_github_headers() -> dict:
 
 
 def get_latest_github_release(owner: str, repo: str) -> tuple[str | None, str | None]:
-    """
-    Retourne (tag_name, release_url) de la dernière release GitHub.
-    Fallback sur les tags si aucune release formelle n'existe.
-    """
+    """Retourne (tag_name, release_url) de la dernière release GitHub."""
     url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
     try:
         resp = requests.get(url, headers=get_github_headers(), timeout=10)
 
         if resp.status_code == 404:
-            # Pas de release → fallback sur les tags
+            # Pas de release formelle → fallback sur les tags
             url_tags = f"https://api.github.com/repos/{owner}/{repo}/tags"
             resp = requests.get(url_tags, headers=get_github_headers(), timeout=10)
             if resp.ok and resp.json():
@@ -81,24 +68,20 @@ def normalize_version(version: str) -> str:
 
 
 def now_timestamp_ms() -> int:
-    """Timestamp Unix en millisecondes (comme dans updated_at de Runtipi)."""
+    """Timestamp Unix en millisecondes (format updated_at de Runtipi)."""
     return int(datetime.now(timezone.utc).timestamp() * 1000)
 
 
 # ── Mise à jour des fichiers ──────────────────
 
 def update_config_json(path: Path, old_version: str, new_version: str) -> bool:
-    """
-    Met à jour config.json :
-      - version      : nouvelle version (sans préfixe 'v')
-      - tipi_version : +1
-      - updated_at   : timestamp ms actuel
-    """
     try:
         with open(path, "r") as f:
             config = json.load(f)
 
-        config["version"]      = normalize_version(new_version)
+        # Conserve le format existant (avec ou sans 'v')
+        old_ver = config.get("version", "")
+        config["version"] = make_new_tag(old_ver, normalize_version(new_version))
         config["tipi_version"] = int(config.get("tipi_version", 0)) + 1
         config["updated_at"]   = now_timestamp_ms()
 
@@ -112,12 +95,29 @@ def update_config_json(path: Path, old_version: str, new_version: str) -> bool:
         return False
 
 
+def detect_image_tag_format(image: str, version_norm: str) -> str | None:
+    """
+    Détecte le tag exact utilisé dans l'image Docker (avec ou sans 'v').
+    Retourne le tag trouvé, ou None si la version n'est pas dans l'image.
+    Ex: "ghcr.io/app:v4.2.0" + "4.2.0" → "v4.2.0"
+    Ex: "ghcr.io/app:4.2.0"  + "4.2.0" → "4.2.0"
+    """
+    for candidate in [version_norm, f"v{version_norm}"]:
+        if image.endswith(f":{candidate}"):
+            return candidate
+    return None
+
+
+def make_new_tag(old_tag: str, new_version_norm: str) -> str:
+    """
+    Conserve le format du tag existant (avec ou sans 'v').
+    Ex: old_tag="v4.2.0", new="4.3.0" → "v4.3.0"
+    Ex: old_tag="4.2.0",  new="4.3.0" → "4.3.0"
+    """
+    return f"v{new_version_norm}" if old_tag.startswith("v") else new_version_norm
+
+
 def update_docker_compose_json(path: Path, old_version: str, new_version: str) -> bool:
-    """
-    Remplace le tag de version dans le champ "image" du docker-compose.json.
-    Ex: "ghcr.io/wizarrrr/wizarr:4.2.0" → "ghcr.io/wizarrrr/wizarr:4.3.0"
-    Gère les versions avec ou sans préfixe 'v'.
-    """
     if not path.exists():
         return False
     try:
@@ -132,13 +132,11 @@ def update_docker_compose_json(path: Path, old_version: str, new_version: str) -
             image = service.get("image", "")
             if not image:
                 continue
-
-            for old_tag in [old_norm, f"v{old_norm}"]:
-                if image.endswith(f":{old_tag}"):
-                    new_tag = f"v{new_norm}" if old_tag.startswith("v") else new_norm
-                    service["image"] = image[: -len(old_tag)] + new_tag
-                    modified = True
-                    break
+            old_tag = detect_image_tag_format(image, old_norm)
+            if old_tag:
+                new_tag = make_new_tag(old_tag, new_norm)
+                service["image"] = image[: -len(old_tag)] + new_tag
+                modified = True
 
         if modified:
             with open(path, "w") as f:
@@ -152,10 +150,6 @@ def update_docker_compose_json(path: Path, old_version: str, new_version: str) -
 
 
 def update_docker_compose_yml(path: Path, old_version: str, new_version: str) -> bool:
-    """
-    Remplace le tag de version dans les lignes 'image:' du docker-compose.yml.
-    Remplacement de chaîne simple : :4.2.0 → :4.3.0
-    """
     if not path.exists():
         return False
     try:
@@ -165,10 +159,12 @@ def update_docker_compose_yml(path: Path, old_version: str, new_version: str) ->
         old_norm = normalize_version(old_version)
         new_norm = normalize_version(new_version)
 
+        # Cherche le format exact utilisé dans le fichier (avec ou sans 'v')
         new_content = content
         for old_tag in [old_norm, f"v{old_norm}"]:
-            new_tag = f"v{new_norm}" if old_tag.startswith("v") else new_norm
-            new_content = new_content.replace(f":{old_tag}", f":{new_tag}")
+            if f":{old_tag}" in new_content:
+                new_tag = make_new_tag(old_tag, new_norm)
+                new_content = new_content.replace(f":{old_tag}", f":{new_tag}")
 
         if new_content != content:
             with open(path, "w") as f:
@@ -183,19 +179,41 @@ def update_docker_compose_yml(path: Path, old_version: str, new_version: str) ->
 
 # ── Git ───────────────────────────────────────
 
-def git_commit_and_push(updated_apps: list[str]):
-    date_str = datetime.now().strftime("%Y-%m-%d")
+def git_stage_and_commit(updated_apps: list[str]):
+    """Stage et commit les fichiers modifiés. Le push et la PR sont gérés par le workflow."""
+    date_str  = datetime.now().strftime("%Y-%m-%d")
     short_msg = GIT_COMMIT_MESSAGE.replace("{date}", date_str)
-    body = "Apps mises à jour :\n" + "\n".join(f"  - {a}" for a in updated_apps)
-    full_msg = f"{short_msg}\n\n{body}"
+    body      = "Apps mises à jour :\n" + "\n".join(f"  - {a}" for a in updated_apps)
+    full_msg  = f"{short_msg}\n\n{body}"
 
     try:
         subprocess.run(["git", "-C", str(APPSTORE_PATH), "add", "-A"], check=True)
         subprocess.run(["git", "-C", str(APPSTORE_PATH), "commit", "-m", full_msg], check=True)
-        subprocess.run(["git", "-C", str(APPSTORE_PATH), "push"], check=True)
-        print(f"\n✅ Git — commit & push OK ({len(updated_apps)} app(s))")
+        print(f"\n✅ Git — commit OK ({len(updated_apps)} app(s))")
     except subprocess.CalledProcessError as e:
         print(f"\n❌ Erreur Git : {e}")
+
+
+def set_github_actions_outputs(updated_apps: list[str], discord_updates: list[dict]):
+    """Expose les outputs pour le step 'Create Pull Request' du workflow."""
+    github_output = os.environ.get("GITHUB_OUTPUT")
+    if not github_output:
+        return  # pas dans GitHub Actions, on ignore
+
+    lines = ["## 🚀 Apps mises à jour\n"]
+    for u in discord_updates:
+        lines.append(
+            f"- **{u['app']}** : `{u['old_version']}` → `{u['new_version']}`"
+            f" · tipi_version `{u['tipi_version']}`"
+            f" · [Release]({u['release_url']})"
+        )
+    pr_body = "\n".join(lines)
+
+    with open(github_output, "a") as f:
+        f.write("updated=true\n")
+        f.write("pr_body<<EOF\n")
+        f.write(pr_body + "\n")
+        f.write("EOF\n")
 
 
 # ── Discord ───────────────────────────────────
@@ -259,7 +277,6 @@ def process_apps():
         current_version = config.get("version", "")
         source          = config.get("source", "")
 
-        # ── Extraction owner/repo depuis l'URL GitHub ──
         if "github.com" not in source:
             if VERBOSE:
                 print(f"  ⏭  {app_name} — source non-GitHub, ignoré")
@@ -272,7 +289,6 @@ def process_apps():
 
         owner, repo = parts[0], parts[1]
 
-        # ── Vérification GitHub ──
         latest_tag, release_url = get_latest_github_release(owner, repo)
         if not latest_tag:
             errors.append(app_name)
@@ -283,10 +299,8 @@ def process_apps():
                 print(f"  ✔  {app_name} — à jour ({current_version})")
             continue
 
-        # ── Mise à jour des 3 fichiers ──
         print(f"  🆕 {app_name} : {current_version} → {latest_tag}")
 
-        # docker-compose en premier (ils lisent l'ancienne version), config.json en dernier
         update_docker_compose_json(dc_json_path, current_version, latest_tag)
         update_docker_compose_yml(dc_yml_path,   current_version, latest_tag)
         ok = update_config_json(config_path, current_version, latest_tag)
@@ -310,7 +324,6 @@ def process_apps():
         else:
             errors.append(app_name)
 
-    # ── Résumé ──
     print(f"\n{'─' * 50}")
     print(f"📦 Mises à jour : {len(updated_apps)}")
     if errors:
@@ -318,7 +331,8 @@ def process_apps():
 
     if updated_apps:
         if AUTO_COMMIT:
-            git_commit_and_push(updated_apps)
+            git_stage_and_commit(updated_apps)
+        set_github_actions_outputs(updated_apps, discord_updates)
         send_discord_notification(discord_updates)
     else:
         print("✅ Toutes les apps sont à jour.")
