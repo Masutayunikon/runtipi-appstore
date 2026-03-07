@@ -75,6 +75,19 @@ def normalize_version(version: str) -> str:
     return version.lstrip("v")
 
 
+def docker_version(version_norm: str) -> str:
+    """
+    Retourne la version utilisable dans un tag Docker.
+    Les versions à 4 segments (x.x.x.y) sont tronquées à 3 (x.x.x) :
+    '6.0.4.10291' → '6.0.4'
+    '4.2.0'       → '4.2.0' (inchangé)
+    """
+    parts = version_norm.split(".")
+    if len(parts) == 4:
+        return ".".join(parts[:3])
+    return version_norm
+
+
 def now_timestamp_ms() -> int:
     """Timestamp Unix en millisecondes (format updated_at de Runtipi)."""
     return int(datetime.now(timezone.utc).timestamp() * 1000)
@@ -96,7 +109,7 @@ def update_config_json(path: Path, old_version: str, new_version: str) -> bool:
         old_ver  = config.get("version", "")
         old_tipi = int(config.get("tipi_version", 0))
 
-        new_ver  = make_new_tag(old_ver, normalize_version(new_version))
+        new_ver  = make_new_tag(old_ver, docker_version(normalize_version(new_version)))
         new_tipi = old_tipi + 1
         new_ts   = now_timestamp_ms()
 
@@ -162,7 +175,7 @@ def update_docker_compose_json(path: Path, old_version: str, new_version: str) -
 
         data     = json.loads(text)
         old_norm = normalize_version(old_version)
-        new_norm = normalize_version(new_version)
+        new_norm = docker_version(normalize_version(new_version))
 
         # Trouver l'image du service principal (isMain: true)
         main_image = None
@@ -207,7 +220,7 @@ def update_docker_compose_yml(path: Path, old_version: str, new_version: str) ->
             content = f.read()
 
         old_norm = normalize_version(old_version)
-        new_norm = normalize_version(new_version)
+        new_norm = docker_version(normalize_version(new_version))
 
         # Cherche le format exact utilisé dans le fichier (avec ou sans 'v')
         new_content = content
@@ -367,7 +380,7 @@ def process_apps():
             discord_updates.append({
                 "app":          app_name,
                 "old_version":  current_version,
-                "new_version":  make_new_tag(current_version, normalize_version(latest_tag)),
+                "new_version":  make_new_tag(current_version, docker_version(normalize_version(latest_tag))),
                 "tipi_version": new_tipi,
                 "release_url":  release_url,
             })
