@@ -8,6 +8,7 @@ Runtipi Appstore Auto-Updater
 """
 
 import os
+import re
 import json
 import subprocess
 import requests
@@ -75,19 +76,42 @@ def now_timestamp_ms() -> int:
 # ── Mise à jour des fichiers ──────────────────
 
 def update_config_json(path: Path, old_version: str, new_version: str) -> bool:
+    """
+    Modifie uniquement les champs version, tipi_version et updated_at
+    via regex sur le texte brut — préserve le formatage original du fichier.
+    """
     try:
         with open(path, "r") as f:
-            config = json.load(f)
+            text = f.read()
 
-        # Conserve le format existant (avec ou sans 'v')
-        old_ver = config.get("version", "")
-        config["version"] = make_new_tag(old_ver, normalize_version(new_version))
-        config["tipi_version"] = int(config.get("tipi_version", 0)) + 1
-        config["updated_at"]   = now_timestamp_ms()
+        # Lire les valeurs actuelles depuis le JSON parsé
+        config   = json.loads(text)
+        old_ver  = config.get("version", "")
+        old_tipi = int(config.get("tipi_version", 0))
+
+        new_ver  = make_new_tag(old_ver, normalize_version(new_version))
+        new_tipi = old_tipi + 1
+        new_ts   = now_timestamp_ms()
+
+        # Remplacements regex ciblés — ne touche pas au reste du fichier
+        text = re.sub(
+            r'("version"\s*:\s*)"[^"]*"',
+            rf'\1"{new_ver}"',
+            text
+        )
+        text = re.sub(
+            r'("tipi_version"\s*:\s*)\d+',
+            rf'\g<1>{new_tipi}',
+            text
+        )
+        text = re.sub(
+            r'("updated_at"\s*:\s*)\d+',
+            rf'\g<1>{new_ts}',
+            text
+        )
 
         with open(path, "w") as f:
-            json.dump(config, f, indent=2, ensure_ascii=False)
-            f.write("\n")
+            f.write(text)
 
         return True
     except Exception as e:
