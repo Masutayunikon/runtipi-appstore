@@ -1,0 +1,39 @@
+name: Auto-update app versions
+
+on:
+  schedule:
+    # Tous les jours à 6h00 UTC
+    - cron: "0 6 * * *"
+  workflow_dispatch: # Lancement manuel possible
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run updater
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          APPSTORE_PATH: ${{ github.workspace }}
+        run: python scripts/update_apps.py
