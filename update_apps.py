@@ -367,7 +367,7 @@ def process_apps():
             discord_updates.append({
                 "app":          app_name,
                 "old_version":  current_version,
-                "new_version":  latest_tag,
+                "new_version":  make_new_tag(current_version, normalize_version(latest_tag)),
                 "tipi_version": new_tipi,
                 "release_url":  release_url,
             })
