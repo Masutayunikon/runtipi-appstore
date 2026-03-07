@@ -186,6 +186,9 @@ def update_docker_compose_json(path: Path, old_version: str, new_version: str) -
         new_text = text.replace(f'"image": "{main_image}"', f'"image": "{new_image}"', 1)
 
         if new_text != text:
+            # Garantit un saut de ligne final pour le linter
+            if not new_text.endswith("\n"):
+                new_text += "\n"
             with open(path, "w") as f:
                 f.write(new_text)
             return True
@@ -364,7 +367,7 @@ def process_apps():
             discord_updates.append({
                 "app":          app_name,
                 "old_version":  current_version,
-                "new_version":  normalize_version(latest_tag),
+                "new_version":  latest_tag,
                 "tipi_version": new_tipi,
                 "release_url":  release_url,
             })
