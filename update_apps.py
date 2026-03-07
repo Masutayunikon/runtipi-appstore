@@ -149,32 +149,48 @@ def make_new_tag(old_tag: str, new_version_norm: str) -> str:
 
 
 def update_docker_compose_json(path: Path, old_version: str, new_version: str) -> bool:
+    """
+    Remplace le tag de version uniquement sur le service isMain=true.
+    Parse le JSON pour trouver l'image principale, puis str.replace ciblé
+    sur le texte brut — préserve le formatage original du fichier.
+    """
     if not path.exists():
         return False
     try:
         with open(path, "r") as f:
-            data = json.load(f)
+            text = f.read()
 
+        data     = json.loads(text)
         old_norm = normalize_version(old_version)
         new_norm = normalize_version(new_version)
 
-        modified = False
+        # Trouver l'image du service principal (isMain: true)
+        main_image = None
         for service in data.get("services", []):
-            image = service.get("image", "")
-            if not image:
-                continue
-            old_tag = detect_image_tag_format(image, old_norm)
-            if old_tag:
-                new_tag = make_new_tag(old_tag, new_norm)
-                service["image"] = image[: -len(old_tag)] + new_tag
-                modified = True
+            if service.get("isMain"):
+                main_image = service.get("image", "")
+                break
 
-        if modified:
+        if not main_image:
+            return False
+
+        # Détecter le format du tag dans cette image et construire le nouveau
+        old_tag = detect_image_tag_format(main_image, old_norm)
+        if not old_tag:
+            return False
+
+        new_tag   = make_new_tag(old_tag, new_norm)
+        new_image = main_image[: -len(old_tag)] + new_tag
+
+        # Remplacement ciblé sur l'image exacte — ne touche pas aux autres services
+        new_text = text.replace(f'"image": "{main_image}"', f'"image": "{new_image}"', 1)
+
+        if new_text != text:
             with open(path, "w") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-                f.write("\n")
+                f.write(new_text)
+            return True
 
-        return modified
+        return False
     except Exception as e:
         print(f"    ❌ Erreur docker-compose.json ({path}): {e}")
         return False
