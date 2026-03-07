@@ -64,8 +64,15 @@ def get_latest_github_release(owner: str, repo: str) -> tuple[str | None, str | 
 
 
 def normalize_version(version: str) -> str:
-    """Retire le préfixe 'v' pour comparer : 'v4.2.0' == '4.2.0'."""
-    return version.lstrip("v").strip()
+    """
+    Normalise un tag GitHub pour comparaison et stockage :
+    - retire le préfixe 'v'       : 'v4.2.0'       → '4.2.0'
+    - retire le préfixe 'release-': 'release-4.2.0' → '4.2.0'
+    """
+    version = version.strip()
+    if version.lower().startswith("release-"):
+        version = version[len("release-"):]
+    return version.lstrip("v")
 
 
 def now_timestamp_ms() -> int:
@@ -122,9 +129,9 @@ def update_config_json(path: Path, old_version: str, new_version: str) -> bool:
 def detect_image_tag_format(image: str, version_norm: str) -> str | None:
     """
     Détecte le tag exact utilisé dans l'image Docker (avec ou sans 'v').
-    Retourne le tag trouvé, ou None si la version n'est pas dans l'image.
-    Ex: "ghcr.io/app:v4.2.0" + "4.2.0" → "v4.2.0"
-    Ex: "ghcr.io/app:4.2.0"  + "4.2.0" → "4.2.0"
+    Ex: "app:v4.2.0" + "4.2.0" → "v4.2.0"
+    Ex: "app:4.2.0"  + "4.2.0" → "4.2.0"
+    Note: le préfixe 'release-' n'apparaît que sur GitHub, jamais dans les images Docker.
     """
     for candidate in [version_norm, f"v{version_norm}"]:
         if image.endswith(f":{candidate}"):
@@ -135,8 +142,8 @@ def detect_image_tag_format(image: str, version_norm: str) -> str | None:
 def make_new_tag(old_tag: str, new_version_norm: str) -> str:
     """
     Conserve le format du tag existant (avec ou sans 'v').
-    Ex: old_tag="v4.2.0", new="4.3.0" → "v4.3.0"
-    Ex: old_tag="4.2.0",  new="4.3.0" → "4.3.0"
+    Ex: old_tag="v4.2.0" → "v4.3.0"
+    Ex: old_tag="4.2.0"  → "4.3.0"
     """
     return f"v{new_version_norm}" if old_tag.startswith("v") else new_version_norm
 
