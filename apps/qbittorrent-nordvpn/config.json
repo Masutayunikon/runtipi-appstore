@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "port": 8153,
   "id": "qbittorrent-nordvpn",
-  "tipi_version": 32,
-  "version": "5.1.2",
+  "tipi_version": 33,
+  "version": "5.1.4",
   "categories": ["utilities"],
   "description": "qBittorrent is a fast, easy, and free BitTorrent client.",
   "short_desc": "Fast, easy, and free BitTorrent client",
@@ -47,5 +47,5 @@
     }
   ],
   "created_at": 1691943801422,
-  "updated_at": 1748992181245
+  "updated_at": 1772898217177
 }
