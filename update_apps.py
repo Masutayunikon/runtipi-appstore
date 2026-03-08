@@ -357,7 +357,7 @@ def process_apps():
             errors.append(app_name)
             continue
 
-        if normalize_version(current_version) == normalize_version(latest_tag):
+        if docker_version(normalize_version(current_version)) == docker_version(normalize_version(latest_tag)):
             if VERBOSE:
                 print(f"  ✔  {app_name} — à jour ({current_version})")
             continue
