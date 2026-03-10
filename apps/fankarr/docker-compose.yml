@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   fankarr:
-    image: masutayunikon/fankarr:1.0.3
+    image: masutayunikon/fankarr:1.0.4
     container_name: fankarr
     environment:
       - PUID=1000
@@ -13,7 +13,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${APP_DATA_DIR}/data:/app/data
-      - ${ROOT_FOLDER_HOST}/media/Kai:/media/Kai
+      - ${ROOT_FOLDER_HOST}/media/data/Kaï:/media/Kai
       - ${ROOT_FOLDER_HOST}/media/torrents/complete:/downloads/complete
     ports:
       - ${APP_PORT}:3001

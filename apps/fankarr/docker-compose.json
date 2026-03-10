@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fankarr",
-      "image": "masutayunikon/fankarr:1.0.3",
+      "image": "masutayunikon/fankarr:1.0.4",
       "environment": [
         {
           "key": "PUID",
@@ -39,7 +39,7 @@
           "private": false
         },
         {
-          "hostPath": "${ROOT_FOLDER_HOST}/media/Kai",
+          "hostPath": "${ROOT_FOLDER_HOST}/media/data/Kaï",
           "containerPath": "/media/Kai",
           "readOnly": false,
           "shared": false,
