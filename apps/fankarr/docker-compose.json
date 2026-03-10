@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fankarr",
+      "image": "masutayunikon/fankarr:1.0.0",
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        },
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "GITHUB_RAW_URL",
+          "value": "${GITHUB_RAW_URL}"
+        }
+      ],
+      "internalPort": 3001,
+      "volumes": [
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}/media/Kai",
+          "containerPath": "/media/Kai",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}/media/torrents/complete",
+          "containerPath": "/downloads/complete",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        }
+      ],
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
+    }
+  ]
+}

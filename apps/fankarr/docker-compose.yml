@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  fankarr:
+    image: masutayunikon/fankarr:1.0.0
+    container_name: fankarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - GITHUB_RAW_URL=${GITHUB_RAW_URL}
+    dns:
+      - ${DNS_IP}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/data:/app/data
+      - ${ROOT_FOLDER_HOST}/media/Kai:/media/Kai
+      - ${ROOT_FOLDER_HOST}/media/torrents/complete:/downloads/complete
+    ports:
+      - ${APP_PORT}:3001
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.fankarr-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.fankarr.loadbalancer.server.port: 3001
+      traefik.http.routers.fankarr-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.fankarr-insecure.entrypoints: web
+      traefik.http.routers.fankarr-insecure.service: fankarr
+      traefik.http.routers.fankarr-insecure.middlewares: fankarr-web-redirect
+      traefik.http.routers.fankarr.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.fankarr.entrypoints: websecure
+      traefik.http.routers.fankarr.service: fankarr
+      traefik.http.routers.fankarr.tls.certresolver: myresolver
+      traefik.http.routers.fankarr-local-insecure.rule: Host(`fankarr.${LOCAL_DOMAIN}`)
+      traefik.http.routers.fankarr-local-insecure.entrypoints: web
+      traefik.http.routers.fankarr-local-insecure.service: fankarr
+      traefik.http.routers.fankarr-local-insecure.middlewares: fankarr-web-redirect
+      traefik.http.routers.fankarr-local.rule: Host(`fankarr.${LOCAL_DOMAIN}`)
+      traefik.http.routers.fankarr-local.entrypoints: websecure
+      traefik.http.routers.fankarr-local.service: fankarr
+      traefik.http.routers.fankarr-local.tls: true
+      runtipi.managed: true
