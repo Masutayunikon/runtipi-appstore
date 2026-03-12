@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fankarr",
-      "image": "masutayunikon/fankarr:1.7.2",
+      "image": "masutayunikon/fankarr:1.7.3",
       "environment": [
         {
           "key": "PUID",
