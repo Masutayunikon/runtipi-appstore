@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   ygege:
-    image: masutayunikon/ygege:0.9.0
+    image: masutayunikon/ygege:0.9.1
     container_name: ygege
     restart: unless-stopped
     ports:
