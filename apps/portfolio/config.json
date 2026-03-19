@@ -37,13 +37,13 @@
       "env_variable": "VITE_SPOTIFY_CLIENT_ID"
     },
     {
-      "type": "password",
+      "type": "text",
       "label": "Spotify Client Secret (optional)",
       "required": false,
       "env_variable": "VITE_SPOTIFY_CLIENT_SECRET"
     },
     {
-      "type": "password",
+      "type": "text",
       "label": "Spotify Refresh Token (optional)",
       "required": false,
       "env_variable": "VITE_SPOTIFY_REFRESH_TOKEN"
