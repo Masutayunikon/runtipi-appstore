@@ -1,24 +1,23 @@
+version: "3.7"
+
 services:
-  portfolio:
-    image: masutayunikon/portfolio:v1.2.0
-    container_name: portfolio
+  portfolio-console:
+    image: ghcr.io/masutayunikon/portfolio-console:1.0.0
+    container_name: portfolio-console
     restart: unless-stopped
-    environment:
-      NODE_ENV: production
-      HOST: 0.0.0.0
-      PORT: 3000
-      NITRO_HOST: 0.0.0.0
-      NITRO_PORT: 3000
-
-      NUXT_SMTP_HOST: ${NUXT_SMTP_HOST}
-      NUXT_SMTP_PORT: ${NUXT_SMTP_PORT}
-      NUXT_SMTP_USER: ${NUXT_SMTP_USER}
-      NUXT_SMTP_PASS: ${NUXT_SMTP_PASS}
-      NUXT_SMTP_TO_EMAIL: ${NUXT_SMTP_TO_EMAIL}
-      NUXT_FROM_EMAIL: ${NUXT_FROM_EMAIL}
-
     ports:
       - "${APP_PORT}:3000"
+    environment:
+      - VITE_GITHUB_USERNAME=${VITE_GITHUB_USERNAME}
+      - VITE_GITHUB_TOKEN=${VITE_GITHUB_TOKEN}
+      - VITE_SPOTIFY_CLIENT_ID=${VITE_SPOTIFY_CLIENT_ID}
+      - VITE_SPOTIFY_CLIENT_SECRET=${VITE_SPOTIFY_CLIENT_SECRET}
+      - VITE_SPOTIFY_REFRESH_TOKEN=${VITE_SPOTIFY_REFRESH_TOKEN}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_TO=${SMTP_TO}
 
     networks:
       - tipi_main_network

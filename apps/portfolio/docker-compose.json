@@ -1,20 +1,56 @@
 {
-  "$schema": "../dynamic-compose-schema.json",
+  "schemaVersion": 2,
   "services": [
     {
-      "name": "portfolio",
-      "image": "masutayunikon/portfolio:v1.2.0",
-      "environment": {
-        "NODE_ENV": "production",
-        "NUXT_SMTP_HOST": "${NUXT_SMTP_HOST}",
-        "NUXT_SMTP_PORT": "${NUXT_SMTP_PORT}",
-        "NUXT_SMTP_USER": "${NUXT_SMTP_USER}",
-        "NUXT_SMTP_PASS": "${NUXT_SMTP_PASS}",
-        "NUXT_SMTP_TO_EMAIL": "${NUXT_SMTP_TO_EMAIL}",
-        "NUXT_SMTP_FROM_EMAIL": "${NUXT_SMTP_FROM_EMAIL}"
-      },
+      "name": "portfolio-console",
+      "image": "ghcr.io/masutayunikon/portfolio-console:1.0.0",
+      "environment": [
+        {
+          "key": "VITE_GITHUB_USERNAME",
+          "value": "${VITE_GITHUB_USERNAME}"
+        },
+        {
+          "key": "VITE_GITHUB_TOKEN",
+          "value": "${VITE_GITHUB_TOKEN}"
+        },
+        {
+          "key": "VITE_SPOTIFY_CLIENT_ID",
+          "value": "${VITE_SPOTIFY_CLIENT_ID}"
+        },
+        {
+          "key": "VITE_SPOTIFY_CLIENT_SECRET",
+          "value": "${VITE_SPOTIFY_CLIENT_SECRET}"
+        },
+        {
+          "key": "VITE_SPOTIFY_REFRESH_TOKEN",
+          "value": "${VITE_SPOTIFY_REFRESH_TOKEN}"
+        },
+        {
+          "key": "SMTP_HOST",
+          "value": "${SMTP_HOST}"
+        },
+        {
+          "key": "SMTP_PORT",
+          "value": "${SMTP_PORT}"
+        },
+        {
+          "key": "SMTP_USER",
+          "value": "${SMTP_USER}"
+        },
+        {
+          "key": "SMTP_PASS",
+          "value": "${SMTP_PASS}"
+        },
+        {
+          "key": "SMTP_TO",
+          "value": "${SMTP_TO}"
+        }
+      ],
       "internalPort": 3000,
-      "isMain": true
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
     }
   ]
 }
