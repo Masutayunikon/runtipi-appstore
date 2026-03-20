@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+  portfolio-console:
+    image: ghcr.io/masutayunikon/portfolio-console:1.0.0
+    container_name: portfolio-console
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      - VITE_GITHUB_USERNAME=${VITE_GITHUB_USERNAME}
+      - VITE_GITHUB_TOKEN=${VITE_GITHUB_TOKEN}
+      - VITE_SPOTIFY_CLIENT_ID=${VITE_SPOTIFY_CLIENT_ID}
+      - VITE_SPOTIFY_CLIENT_SECRET=${VITE_SPOTIFY_CLIENT_SECRET}
+      - VITE_SPOTIFY_REFRESH_TOKEN=${VITE_SPOTIFY_REFRESH_TOKEN}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - SMTP_TO=${SMTP_TO}
+
+    networks:
+      - tipi_main_network
+
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.portfolio-console-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.portfolio-console.loadbalancer.server.port: 3000
+      traefik.http.routers.portfolio-console-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.portfolio-console-insecure.entrypoints: web
+      traefik.http.routers.portfolio-console-insecure.service: portfolio-console
+      traefik.http.routers.portfolio-console-insecure.middlewares: portfolio-console-web-redirect
+      traefik.http.routers.portfolio-console.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.portfolio-console.entrypoints: websecure
+      traefik.http.routers.portfolio-console.service: portfolio-console
+      traefik.http.routers.portfolio-console.tls.certresolver: myresolver
+      traefik.http.routers.portfolio-console-local-insecure.rule: Host(`portfolio-console.${LOCAL_DOMAIN}`)
+      traefik.http.routers.portfolio-console-local-insecure.entrypoints: web
+      traefik.http.routers.portfolio-console-local-insecure.service: portfolio-console
+      traefik.http.routers.portfolio-console-local-insecure.middlewares: portfolio-console-web-redirect
+      traefik.http.routers.portfolio-console-local.rule: Host(`portfolio-console.${LOCAL_DOMAIN}`)
+      traefik.http.routers.portfolio-console-local.entrypoints: websecure
+      traefik.http.routers.portfolio-console-local.service: portfolio-console
+      traefik.http.routers.portfolio-console-local.tls: true
+      runtipi.managed: true
