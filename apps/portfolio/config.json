@@ -1,11 +1,11 @@
 {
   "$schema": "../app-info-schema.json",
-  "name": "Portfolio Console",
+  "name": "Portfolio",
   "available": true,
   "exposable": true,
   "dynamic_config": true,
   "port": 3000,
-  "id": "portfolio-console",
+  "id": "portfolio",
   "tipi_version": 1,
   "version": "1.0.0",
   "categories": ["utilities", "development"],
