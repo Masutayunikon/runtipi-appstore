@@ -22,7 +22,7 @@
           "value": "${GITHUB_RAW_URL}"
         }
       ],
-      "internalPort": 3001,
+      "internalPort": 9898,
       "volumes": [
         {
           "hostPath": "/etc/localtime",

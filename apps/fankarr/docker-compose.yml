@@ -16,7 +16,7 @@ services:
       - ${ROOT_FOLDER_HOST}/media/data/Kaï:/media/Kai
       - ${ROOT_FOLDER_HOST}/media/torrents/complete:/downloads/complete
     ports:
-      - ${APP_PORT}:3001
+      - ${APP_PORT}:9898
     restart: unless-stopped
     networks:
       - tipi_main_network
