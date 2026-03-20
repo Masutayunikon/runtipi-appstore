@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  portfolio-console:
+  portfolio:
     image: ghcr.io/masutayunikon/portfolio-console:1.0.0
     container_name: portfolio-console
     restart: unless-stopped

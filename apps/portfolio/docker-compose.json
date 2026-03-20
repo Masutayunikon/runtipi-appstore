@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "services": [
     {
-      "name": "portfolio-console",
+      "name": "portfolio",
       "image": "ghcr.io/masutayunikon/portfolio-console:1.0.0",
       "environment": [
         {
