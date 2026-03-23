@@ -28,10 +28,10 @@ If you want to see new apps on Tipi you can either:
 | Name                                                              | Description                                                                       | Port | Dynamic (13) |
 | ----------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---- | ------------ |
 | [Bazarr](https://github.com/morpheus65535/bazarr)                 | A companion application to Sonarr and Radarr that manages and downloads subtitles | 6767 | yes          |
-| [Fankarr](https://github.com/masutayunikon/fankarr)               | Gestionnaire Fankai                                                               | 3001 | yes          |
+| [Fankarr](https://github.com/masutayunikon/fankarr)               | Gestionnaire Fankai                                                               | 9898 | yes          |
 | [Flaresolverr](https://github.com/FlareSolverr/FlareSolverr)      | Bypass Cloudflare and DDoS-GuARD.                                                 | 8666 | yes          |
 | [Jellyfin](https://github.com/jellyfin/jellyfin)                  | A media server for your home collection                                           | 8091 | yes          |
-| [Portfolio](https://github.com/Masutayunikon/Portfolio-w7)        | My portfolio                                                                      | 3000 | yes          |
+| [Portfolio](https://github.com/Masutayunikon/Portfolio-console)   | VS Code-themed developer portfolio                                                | 3000 | yes          |
 | [Prowlarr](https://github.com/Prowlarr/Prowlarr/)                 | A torrent/usenet indexer manager/proxy                                            | 8109 | yes          |
 | [PyGégé](https://github.com/masutayunikon/pygege)                 | YGG Torznab API                                                                   | 8716 | yes          |
 | [qBittorrent Nordvpn](https://github.com/qbittorrent/qBittorrent) | Fast, easy, and free BitTorrent client                                            | 8153 | yes          |
