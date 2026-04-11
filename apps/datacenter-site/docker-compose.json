@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "datacenter-site",
-      "image": "ghcr.io/masutayunikon/datacenter-site:2.0.3",
+      "image": "ghcr.io/masutayunikon/datacenter-site:2.1.0",
       "internalPort": 4000,
       "isMain": true,
       "extraLabels": {
