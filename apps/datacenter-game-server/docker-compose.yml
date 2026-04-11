@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   datacenter-game-server:
-    image: ghcr.io/masutayunikon/datacenter-game-server:2.0.1
+    image: ghcr.io/masutayunikon/datacenter-game-server:2.0.2
     container_name: datacenter-game-server
     restart: unless-stopped
     ports:
