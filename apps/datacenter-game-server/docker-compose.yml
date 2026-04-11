@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  datacenter-game-server:
+    image: ghcr.io/masutayunikon/datacenter-game-server:2.0.1
+    container_name: datacenter-game-server
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:3001
+    environment:
+      SERVER_NAME: ${SERVER_NAME}
+      SERVER_PORT: 3001
+      PUBLIC_URL: ${PUBLIC_URL}
+      LOBBY_URL: ${LOBBY_URL}
+      MAX_ROOMS: ${MAX_ROOMS}
+      MAX_PLAYERS: ${MAX_PLAYERS}
+      IS_PRIVATE: ${IS_PRIVATE}
+      SERVER_PASSWORD: ${SERVER_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/saves:/app/saves
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.datacenter-game-server-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.datacenter-game-server.loadbalancer.server.port: 3001
+      # Web
+      traefik.http.routers.datacenter-game-server-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.datacenter-game-server-insecure.entrypoints: web
+      traefik.http.routers.datacenter-game-server-insecure.service: datacenter-game-server
+      traefik.http.routers.datacenter-game-server-insecure.middlewares: datacenter-game-server-web-redirect
+      # Websecure
+      traefik.http.routers.datacenter-game-server.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.datacenter-game-server.entrypoints: websecure
+      traefik.http.routers.datacenter-game-server.service: datacenter-game-server
+      traefik.http.routers.datacenter-game-server.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.datacenter-game-server-local-insecure.rule: Host(`datacenter-game-server.${LOCAL_DOMAIN}`)
+      traefik.http.routers.datacenter-game-server-local-insecure.entrypoints: web
+      traefik.http.routers.datacenter-game-server-local-insecure.service: datacenter-game-server
+      traefik.http.routers.datacenter-game-server-local-insecure.middlewares: datacenter-game-server-web-redirect
+      # Local domain secure
+      traefik.http.routers.datacenter-game-server-local.rule: Host(`datacenter-game-server.${LOCAL_DOMAIN}`)
+      traefik.http.routers.datacenter-game-server-local.entrypoints: websecure
+      traefik.http.routers.datacenter-game-server-local.service: datacenter-game-server
+      traefik.http.routers.datacenter-game-server-local.tls: true
+      runtipi.managed: true

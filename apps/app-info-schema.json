@@ -39,6 +39,10 @@
     "source": {
       "type": "string"
     },
+    "tag_prefix": {
+        "type": "string",
+        "default": ""
+    },
     "website": {
       "type": "string"
     },

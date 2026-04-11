@@ -1,0 +1,22 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "DataCenter Tycoon",
+  "port": 4000,
+  "available": true,
+  "exposable": true,
+  "dynamic_config": false,
+  "id": "datacenter-site",
+  "tipi_version": 1,
+  "version": "2.0.2",
+  "tag_prefix": "datacenter-site-v",
+  "categories": ["gaming"],
+  "description": "DataCenter Tycoon RTS — Multiplayer browser game",
+  "short_desc": "DataCenter Tycoon RTS",
+  "author": "https://github.com/Masutayunikon",
+  "source": "https://github.com/Masutayunikon/DataCenter-Management-Tycoon",
+  "website": "https://github.com/Masutayunikon/DataCenter-Management-Tycoon",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1744326000000,
+  "updated_at": 1744326000000
+}

@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  datacenter-site:
+    image: ghcr.io/masutayunikon/datacenter-site:2.0.2
+    container_name: datacenter-site
+    restart: unless-stopped
+    ports:
+      - ${APP_PORT}:4000
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.datacenter-site-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.datacenter-site.loadbalancer.server.port: 4000
+      # Web
+      traefik.http.routers.datacenter-site-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.datacenter-site-insecure.entrypoints: web
+      traefik.http.routers.datacenter-site-insecure.service: datacenter-site
+      traefik.http.routers.datacenter-site-insecure.middlewares: datacenter-site-web-redirect
+      # Websecure
+      traefik.http.routers.datacenter-site.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.datacenter-site.entrypoints: websecure
+      traefik.http.routers.datacenter-site.service: datacenter-site
+      traefik.http.routers.datacenter-site.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.datacenter-site-local-insecure.rule: Host(`datacenter-site.${LOCAL_DOMAIN}`)
+      traefik.http.routers.datacenter-site-local-insecure.entrypoints: web
+      traefik.http.routers.datacenter-site-local-insecure.service: datacenter-site
+      traefik.http.routers.datacenter-site-local-insecure.middlewares: datacenter-site-web-redirect
+      # Local domain secure
+      traefik.http.routers.datacenter-site-local.rule: Host(`datacenter-site.${LOCAL_DOMAIN}`)
+      traefik.http.routers.datacenter-site-local.entrypoints: websecure
+      traefik.http.routers.datacenter-site-local.service: datacenter-site
+      traefik.http.routers.datacenter-site-local.tls: true
+      runtipi.managed: true

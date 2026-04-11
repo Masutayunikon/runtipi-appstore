@@ -1,0 +1,71 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "DataCenter Tycoon Server",
+  "port": 3001,
+  "available": true,
+  "exposable": true,
+  "dynamic_config": false,
+  "id": "datacenter-game-server",
+  "tipi_version": 1,
+  "version": "2.0.1",
+  "tag_prefix": "datacenter-game-server-v",
+  "categories": ["gaming"],
+  "description": "DataCenter Tycoon RTS — Multiplayer Game Server",
+  "short_desc": "DataCenter Tycoon Game Server",
+  "author": "https://github.com/Masutayunikon",
+  "source": "https://github.com/Masutayunikon/DataCenter-Management-Tycoon",
+  "website": "https://github.com/Masutayunikon/DataCenter-Management-Tycoon",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Nom du serveur",
+      "default": "Mon Serveur DataCenter",
+      "required": false,
+      "env_variable": "SERVER_NAME"
+    },
+    {
+      "type": "url",
+      "label": "URL publique du serveur (WebSocket)",
+      "hint": "Ex: https://game.mondomaine.com — utilisée par les clients pour se connecter",
+      "required": true,
+      "env_variable": "PUBLIC_URL"
+    },
+    {
+      "type": "url",
+      "label": "URL du lobby (optionnel)",
+      "hint": "Laissez vide si vous n'utilisez pas de lobby central",
+      "required": false,
+      "env_variable": "LOBBY_URL"
+    },
+    {
+      "type": "number",
+      "label": "Nombre max de rooms",
+      "default": "10",
+      "required": false,
+      "env_variable": "MAX_ROOMS"
+    },
+    {
+      "type": "number",
+      "label": "Joueurs max par room",
+      "default": "16",
+      "required": false,
+      "env_variable": "MAX_PLAYERS"
+    },
+    {
+      "type": "boolean",
+      "label": "Serveur privé",
+      "default": "false",
+      "required": false,
+      "env_variable": "IS_PRIVATE"
+    },
+    {
+      "type": "password",
+      "label": "Mot de passe serveur (si privé)",
+      "required": false,
+      "env_variable": "SERVER_PASSWORD"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1744326000000,
+  "updated_at": 1744326000000
+}

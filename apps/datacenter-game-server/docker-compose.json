@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "datacenter-game-server",
+      "image": "ghcr.io/masutayunikon/datacenter-game-server:2.0.1",
+      "environment": [
+        {
+          "key": "SERVER_NAME",
+          "value": "${SERVER_NAME}"
+        },
+        {
+          "key": "SERVER_PORT",
+          "value": 3001
+        },
+        {
+          "key": "PUBLIC_URL",
+          "value": "${PUBLIC_URL}"
+        },
+        {
+          "key": "LOBBY_URL",
+          "value": "${LOBBY_URL}"
+        },
+        {
+          "key": "MAX_ROOMS",
+          "value": "${MAX_ROOMS}"
+        },
+        {
+          "key": "MAX_PLAYERS",
+          "value": "${MAX_PLAYERS}"
+        },
+        {
+          "key": "IS_PRIVATE",
+          "value": "${IS_PRIVATE}"
+        },
+        {
+          "key": "SERVER_PASSWORD",
+          "value": "${SERVER_PASSWORD}"
+        }
+      ],
+      "internalPort": 3001,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/saves",
+          "containerPath": "/app/saves",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        }
+      ],
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
+    }
+  ]
+}

@@ -36,8 +36,23 @@ def get_github_headers() -> dict:
     return headers
 
 
-def get_latest_github_release(owner: str, repo: str) -> tuple[str | None, str | None]:
+def get_latest_github_release(owner: str, repo: str, tag_prefix: str = "") -> tuple[str | None, str | None]:
     """Retourne (tag_name, release_url) de la dernière release GitHub."""
+
+    if tag_prefix:
+        url = f"https://api.github.com/repos/{owner}/{repo}/releases?per_page=20"
+        try:
+            resp = requests.get(url, headers=get_github_headers(), timeout=10)
+            if resp.ok:
+                for release in resp.json():
+                    tag = release.get("tag_name", "")
+                    if tag.startswith(tag_prefix):
+                        return tag, release.get("html_url")
+            return None, None
+        except requests.RequestException as e:
+            print(f"    ⚠️  Requête échouée pour {owner}/{repo}: {e}")
+            return None, None
+
     url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
     try:
         resp = requests.get(url, headers=get_github_headers(), timeout=10)
@@ -64,15 +79,10 @@ def get_latest_github_release(owner: str, repo: str) -> tuple[str | None, str | 
 
 
 def normalize_version(version: str) -> str:
-    """
-    Normalise un tag GitHub pour comparaison et stockage :
-    - retire le préfixe 'v'       : 'v4.2.0'       → '4.2.0'
-    - retire le préfixe 'release-': 'release-4.2.0' → '4.2.0'
-    """
     version = version.strip()
-    if version.lower().startswith("release-"):
-        version = version[len("release-"):]
-    return version.lstrip("v")
+    # Strip tout préfixe jusqu'au premier chiffre (v, release-, datacenter-site-, etc.)
+    version = re.sub(r'^[^\d]+', '', version)
+    return version
 
 
 def docker_version(version_norm: str) -> str:
@@ -352,7 +362,10 @@ def process_apps():
 
         owner, repo = parts[0], parts[1]
 
-        latest_tag, release_url = get_latest_github_release(owner, repo)
+        tag_prefix = config.get("tag_prefix", "")
+
+        latest_tag, release_url = get_latest_github_release(owner, repo, tag_prefix)
+
         if not latest_tag:
             errors.append(app_name)
             continue
