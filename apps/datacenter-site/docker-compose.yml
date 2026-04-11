@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   datacenter-site:
-    image: ghcr.io/masutayunikon/datacenter-site:2.1.1
+    image: ghcr.io/masutayunikon/datacenter-site:2.2.0
     container_name: datacenter-site
     restart: unless-stopped
     ports:

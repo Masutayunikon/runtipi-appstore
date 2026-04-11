@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "datacenter-game-server",
-      "image": "ghcr.io/masutayunikon/datacenter-game-server:2.1.1",
+      "image": "ghcr.io/masutayunikon/datacenter-game-server:2.2.0",
       "environment": [
         {
           "key": "SERVER_NAME",
