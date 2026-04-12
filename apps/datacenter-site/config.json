@@ -6,8 +6,8 @@
   "exposable": true,
   "dynamic_config": false,
   "id": "datacenter-site",
-  "tipi_version": 5,
-  "version": "2.2.0",
+  "tipi_version": 6,
+  "version": "2.3.0",
   "tag_prefix": "datacenter-site-v",
   "categories": ["gaming"],
   "description": "DataCenter Tycoon RTS — Multiplayer browser game",
@@ -18,5 +18,5 @@
   "form_fields": [],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1744326000000,
-  "updated_at": 1775941289091
+  "updated_at": 1775997312595
 }
