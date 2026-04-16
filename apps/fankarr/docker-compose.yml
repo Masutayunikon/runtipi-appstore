@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   fankarr:
-    image: masutayunikon/fankarr:3.8.1
+    image: masutayunikon/fankarr:3.9.1
     container_name: fankarr
     environment:
       - PUID=1000
