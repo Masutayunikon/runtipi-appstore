@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+  chaptarr:
+    image: robertlordhood/chaptarr:latest
+    container_name: chaptarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    dns:
+      - ${DNS_IP}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/data:/config
+      - ${ROOT_FOLDER_HOST}/media:/media
+    ports:
+      - ${APP_PORT}:8789
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.chaptarr-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.chaptarr.loadbalancer.server.port: 7878
+      traefik.http.routers.chaptarr-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.chaptarr-insecure.entrypoints: web
+      traefik.http.routers.chaptarr-insecure.service: chaptarr
+      traefik.http.routers.chaptarr-insecure.middlewares: chaptarr-web-redirect
+      traefik.http.routers.chaptarr.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.chaptarr.entrypoints: websecure
+      traefik.http.routers.chaptarr.service: chaptarr
+      traefik.http.routers.chaptarr.tls.certresolver: myresolver
+      traefik.http.routers.chaptarr-local-insecure.rule: Host(`chaptarr.${LOCAL_DOMAIN}`)
+      traefik.http.routers.chaptarr-local-insecure.entrypoints: web
+      traefik.http.routers.chaptarr-local-insecure.service: chaptarr
+      traefik.http.routers.chaptarr-local-insecure.middlewares: chaptarr-web-redirect
+      traefik.http.routers.chaptarr-local.rule: Host(`chaptarr.${LOCAL_DOMAIN}`)
+      traefik.http.routers.chaptarr-local.entrypoints: websecure
+      traefik.http.routers.chaptarr-local.service: chaptarr
+      traefik.http.routers.chaptarr-local.tls: true
+      runtipi.managed: true
