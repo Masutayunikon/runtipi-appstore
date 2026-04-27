@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "port": 3518,
   "id": "yunikon",
-  "tipi_version": 3,
+  "tipi_version": 4,
   "version": "latest",
   "categories": ["utilities", "development"],
   "description": "VS Code-themed portfolio built with Vue 3 + Vite + Express. Displays projects via GitHub API, a Spotify Now Playing widget, a blog, and a contact form.",
