@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "yunikon",
+      "image": "ghcr.io/masutayunikon/yunikon:latest",
+      "environment": [
+        {
+          "key": "NUXT_SMTP_HOST",
+          "value": "${NUXT_SMTP_HOST}"
+        },
+        {
+          "key": "NUXT_SMTP_PORT",
+          "value": "${NUXT_SMTP_PORT}"
+        },
+        {
+          "key": "NUXT_SMTP_USER",
+          "value": "${NUXT_SMTP_USER}"
+        },
+        {
+          "key": "NUXT_SMTP_PASS",
+          "value": "${NUXT_SMTP_PASS}"
+        },
+        {
+          "key": "NUXT_SMTP_TO",
+          "value": "${NUXT_SMTP_TO}"
+        }
+      ],
+      "internalPort": 3000,
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
+    }
+  ]
+}

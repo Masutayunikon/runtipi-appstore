@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  yunikon:
+    image: ghcr.io/masutayunikon/yunikon:latest
+    container_name: yunikon
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      - NUXT_SMTP_HOST=${NUXT_SMTP_HOST}
+      - NUXT_SMTP_PORT=${NUXT_SMTP_PORT}
+      - NUXT_SMTP_USER=${NUXT_SMTP_USER}
+      - NUXT_SMTP_PASS=${NUXT_SMTP_PASS}
+      - NUXT_SMTP_TO=${NUXT_SMTP_TO}
+
+    networks:
+      - tipi_main_network
+
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.yunikon-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.yunikon.loadbalancer.server.port: 3000
+      traefik.http.routers.yunikon-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.yunikon-insecure.entrypoints: web
+      traefik.http.routers.yunikon-insecure.service: yunikon
+      traefik.http.routers.yunikon-insecure.middlewares: yunikon-web-redirect
+      traefik.http.routers.yunikon.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.yunikon.entrypoints: websecure
+      traefik.http.routers.yunikon.service: yunikon
+      traefik.http.routers.yunikon.tls.certresolver: myresolver
+      traefik.http.routers.yunikon-local-insecure.rule: Host(`yunikon.${LOCAL_DOMAIN}`)
+      traefik.http.routers.yunikon-local-insecure.entrypoints: web
+      traefik.http.routers.yunikon-local-insecure.service: yunikon
+      traefik.http.routers.yunikon-local-insecure.middlewares: yunikon-web-redirect
+      traefik.http.routers.yunikon-local.rule: Host(`yunikon.${LOCAL_DOMAIN}`)
+      traefik.http.routers.yunikon-local.entrypoints: websecure
+      traefik.http.routers.yunikon-local.service: yunikon
+      traefik.http.routers.yunikon-local.tls: true
+      runtipi.managed: true
