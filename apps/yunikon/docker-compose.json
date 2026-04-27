@@ -28,6 +28,21 @@
       ],
       "internalPort": 3000,
       "isMain": true,
+      "labels": {
+        "traefik.enable": "true",
+
+        "traefik.http.routers.yunikon.rule": "Host(`yunikon.re`)",
+        "traefik.http.routers.yunikon.entrypoints": "websecure",
+        "traefik.http.routers.yunikon.tls": "true",
+
+        "traefik.http.routers.yunikon-www.rule": "Host(`www.yunikon.re`)",
+        "traefik.http.routers.yunikon-www.entrypoints": "websecure",
+        "traefik.http.routers.yunikon-www.middlewares": "redirect-www-to-root",
+
+        "traefik.http.middlewares.redirect-www-to-root.redirectregex.regex": "^https://www\\.yunikon\\.re/(.*)",
+        "traefik.http.middlewares.redirect-www-to-root.redirectregex.replacement": "https://yunikon.re/$${1}",
+        "traefik.http.middlewares.redirect-www-to-root.redirectregex.permanent": "true"
+      },
       "extraLabels": {
         "runtipi.managed": true
       }
