@@ -12,7 +12,7 @@
   "description": "Stalwart is a scalable, secure and robust open-source mail server software designed for the 21st century.",
   "short_desc": "Open-source mail server solution with JMAP, IMAP4, and SMTP support",
   "author": "Stalwart Labs",
-  "source": "https://github.com/stalwartlabs",
+  "source": "https://github.com/stalwartlabs/stalwart",
   "website": "https://stalw.art",
   "form_fields": [
     {
