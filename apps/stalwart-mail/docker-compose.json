@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "stalwart",
-      "image": "stalwartlabs/stalwart:v0.13.3",
+      "image": "stalwartlabs/stalwart:v0.16.6",
       "isMain": true,
       "internalPort": 8080,
       "addPorts": [
