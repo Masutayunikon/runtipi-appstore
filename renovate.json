@@ -1,15 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "automerge": false,
-  "prHourlyLimit": 5,
+  "prHourlyLimit": 20,
   "extends": ["config:recommended"],
   "rebaseWhen": "conflicted",
-  "enabledManagers": ["regex"],
+  "enabledManagers": ["custom.regex"],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^.*docker-compose\\.json$"],
+      "managerFilePatterns": ["/^.*docker-compose\\.json$/"],
       "matchStrings": ["\"image\": \"(?<depName>.*?):(?<currentValue>.*?)\","],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^.*docker-compose\\.ya?ml$/"],
+      "matchStrings": ["image:\\s+[\"']?(?<depName>.*?):(?<currentValue>[^\"'\\s]+)[\"']?"],
       "datasourceTemplate": "docker"
     }
   ],
@@ -23,7 +29,11 @@
       "addLabels": ["automerge"]
     },
     {
-      "matchPackageNames": ["mariadb", "mysql", "monogdb", "postgres", "redis", "immich", "immich{-,}**"],
+      "matchPackageNames": ["mariadb", "mysql", "mongodb", "postgres", "redis"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["nextcloud"],
       "enabled": false
     }
   ],
