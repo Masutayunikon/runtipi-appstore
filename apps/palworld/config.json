@@ -1,0 +1,154 @@
+{
+  "name": "Palworld Server",
+  "id": "palworld",
+  "available": true,
+  "exposable": false,
+  "dynamic_config": true,
+  "port": 8212,
+  "description": "Serveur dédié Palworld basé sur l'image Docker de thijsvanloef, avec API REST, RCON, sauvegardes automatiques et notifications Discord.",
+  "tipi_version": 3,
+  "version": "latest",
+  "categories": ["gaming"],
+  "short_desc": "Serveur dédié Palworld en Docker.",
+  "author": "thijsvanloef",
+  "source": "https://github.com/thijsvanloef/palworld-server-docker",
+  "website": "https://tech.palworldgame.com/",
+  "supported_architectures": ["amd64", "arm64"],
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Nom du serveur",
+      "hint": "Affiché dans le navigateur de serveurs et sur Discord",
+      "required": true,
+      "env_variable": "PALWORLD_SERVER_NAME"
+    },
+    {
+      "type": "text",
+      "label": "Description du serveur",
+      "required": false,
+      "env_variable": "PALWORLD_SERVER_DESCRIPTION"
+    },
+    {
+      "type": "password",
+      "label": "Mot de passe du serveur",
+      "hint": "Laisser vide pour un serveur ouvert (déconseillé si COMMUNITY est activé)",
+      "min": 4,
+      "max": 50,
+      "required": false,
+      "env_variable": "PALWORLD_SERVER_PASSWORD"
+    },
+    {
+      "type": "password",
+      "label": "Mot de passe admin",
+      "hint": "Utilisé pour les commandes d'administration in-game et RCON",
+      "min": 8,
+      "max": 50,
+      "required": true,
+      "env_variable": "PALWORLD_ADMIN_PASSWORD"
+    },
+    {
+      "type": "number",
+      "label": "Nombre max de joueurs",
+      "min": 1,
+      "max": 32,
+      "required": false,
+      "env_variable": "PALWORLD_PLAYERS"
+    },
+    {
+      "type": "boolean",
+      "label": "Afficher dans le navigateur de serveurs communautaires",
+      "hint": "À utiliser avec un mot de passe serveur",
+      "required": false,
+      "env_variable": "PALWORLD_COMMUNITY"
+    },
+    {
+      "type": "text",
+      "label": "Plateformes crossplay autorisées",
+      "hint": "Format: (Steam,Xbox,PS5,Mac)",
+      "required": false,
+      "env_variable": "PALWORLD_CROSSPLAY_PLATFORMS"
+    },
+    {
+      "type": "number",
+      "label": "Port du jeu (UDP)",
+      "min": 1024,
+      "max": 65535,
+      "required": false,
+      "env_variable": "PALWORLD_GAME_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Port Query (UDP)",
+      "min": 1024,
+      "max": 65535,
+      "required": false,
+      "env_variable": "PALWORLD_QUERY_PORT"
+    },
+    {
+      "type": "boolean",
+      "label": "Activer RCON",
+      "required": false,
+      "env_variable": "PALWORLD_RCON_ENABLED"
+    },
+    {
+      "type": "number",
+      "label": "Port RCON",
+      "min": 1024,
+      "max": 65535,
+      "required": false,
+      "env_variable": "PALWORLD_RCON_PORT"
+    },
+    {
+      "type": "boolean",
+      "label": "Activer les sauvegardes automatiques",
+      "required": false,
+      "env_variable": "PALWORLD_BACKUP_ENABLED"
+    },
+    {
+      "type": "text",
+      "label": "Fréquence des sauvegardes (cron)",
+      "hint": "Par défaut: 0 */6 * * * (toutes les 6h)",
+      "required": false,
+      "env_variable": "PALWORLD_BACKUP_CRON"
+    },
+    {
+      "type": "number",
+      "label": "Conserver les sauvegardes (jours)",
+      "min": 1,
+      "required": false,
+      "env_variable": "PALWORLD_OLD_BACKUP_DAYS"
+    },
+    {
+      "type": "boolean",
+      "label": "Mises à jour automatiques",
+      "required": false,
+      "env_variable": "PALWORLD_AUTO_UPDATE_ENABLED"
+    },
+    {
+      "type": "boolean",
+      "label": "Redémarrages automatiques",
+      "required": false,
+      "env_variable": "PALWORLD_AUTO_REBOOT_ENABLED"
+    },
+    {
+      "type": "boolean",
+      "label": "Pause automatique du serveur si aucun joueur connecté",
+      "hint": "Économise les ressources CPU quand le serveur est vide",
+      "required": false,
+      "env_variable": "PALWORLD_AUTO_PAUSE_ENABLED"
+    },
+    {
+      "type": "password",
+      "label": "URL du webhook Discord",
+      "hint": "https://discord.com/api/webhooks/...",
+      "required": false,
+      "env_variable": "PALWORLD_DISCORD_WEBHOOK_URL"
+    },
+    {
+      "type": "boolean",
+      "label": "Notifications Discord silencieuses (@silent)",
+      "required": false,
+      "env_variable": "PALWORLD_DISCORD_SUPPRESS_NOTIFICATIONS"
+    }
+  ]
+}
