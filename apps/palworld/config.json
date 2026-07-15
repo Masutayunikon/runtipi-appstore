@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "port": 8212,
   "description": "Serveur dédié Palworld basé sur l'image Docker de thijsvanloef, avec API REST, RCON, sauvegardes automatiques et notifications Discord.",
-  "tipi_version": 3,
+  "tipi_version": 1,
   "version": "latest",
   "categories": ["gaming"],
   "short_desc": "Serveur dédié Palworld en Docker.",
@@ -138,7 +138,7 @@
       "env_variable": "PALWORLD_AUTO_PAUSE_ENABLED"
     },
     {
-      "type": "password",
+      "type": "text",
       "label": "URL du webhook Discord",
       "hint": "https://discord.com/api/webhooks/...",
       "required": false,
