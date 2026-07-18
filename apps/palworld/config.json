@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "port": 8212,
   "description": "Serveur dédié Palworld basé sur l'image Docker de thijsvanloef, avec API REST, RCON, sauvegardes automatiques et notifications Discord.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "latest",
   "categories": ["gaming"],
   "short_desc": "Serveur dédié Palworld en Docker.",
