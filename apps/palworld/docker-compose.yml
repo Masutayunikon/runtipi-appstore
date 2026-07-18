@@ -22,6 +22,7 @@ services:
       ADMIN_PASSWORD: ${PALWORLD_ADMIN_PASSWORD}
       COMMUNITY: ${PALWORLD_COMMUNITY:-false}
       CROSSPLAY_PLATFORMS: ${PALWORLD_CROSSPLAY_PLATFORMS:-(Steam,Xbox,PS5,Mac)}
+      BASE_CAMP_MAX_NUM_IN_GUILD: 12
 
       # API REST (utile pour l'auto-pause et le suivi des joueurs)
       REST_API_ENABLED: true
