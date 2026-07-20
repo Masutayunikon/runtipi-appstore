@@ -24,7 +24,7 @@ services:
       CROSSPLAY_PLATFORMS: ${PALWORLD_CROSSPLAY_PLATFORMS:-(Steam,Xbox,PS5,Mac)}
       BASE_CAMP_MAX_NUM_IN_GUILD: 12
       BASE_CAMP_WORKER_MAX_NUM: 20
-      ALLOW_GLOBAL_PALBOX_IMPORT: true
+      ALLOW_GLOBAL_PALBOX_IMPORT: false
 
       # API REST (utile pour l'auto-pause et le suivi des joueurs)
       REST_API_ENABLED: true
