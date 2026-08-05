@@ -1,73 +1,73 @@
-services:2.7.1
-  palworld:2.7.1
-    image:2.7.1 thijsvanloef/palworld-server-docker:2.7.1latest
-    container_name:2.7.1 palworld
-    restart:2.7.1 unless-stopped
-    stop_grace_period:2.7.1 30s
-    ports:2.7.1
-      - ${PALWORLD_GAME_PORT:2.7.1-8211}:2.7.18211/udp
-      - ${PALWORLD_QUERY_PORT:2.7.1-27015}:2.7.127015/udp
-      - 8212:2.7.18212/tcp   # REST API - usage LAN uniquement. NE PAS forwarder ce port sur ta box/routeur.
-      - ${PALWORLD_RCON_PORT:2.7.1-25575}:2.7.125575/tcp
-    environment:2.7.1
-      PUID:2.7.1 1000
-      PGID:2.7.1 1000
-      TZ:2.7.1 ${TZ}
-      PORT:2.7.1 8211
-      QUERY_PORT:2.7.1 27015
-      PLAYERS:2.7.1 ${PALWORLD_PLAYERS:2.7.1-16}
-      SERVER_NAME:2.7.1 ${PALWORLD_SERVER_NAME}
-      SERVER_DESCRIPTION:2.7.1 ${PALWORLD_SERVER_DESCRIPTION}
-      SERVER_PASSWORD:2.7.1 ${PALWORLD_SERVER_PASSWORD}
-      ADMIN_PASSWORD:2.7.1 ${PALWORLD_ADMIN_PASSWORD}
-      COMMUNITY:2.7.1 ${PALWORLD_COMMUNITY:2.7.1-false}
-      CROSSPLAY_PLATFORMS:2.7.1 ${PALWORLD_CROSSPLAY_PLATFORMS:2.7.1-(Steam,Xbox,PS5,Mac)}
-      BASE_CAMP_MAX_NUM_IN_GUILD:2.7.1 12
-      BASE_CAMP_WORKER_MAX_NUM:2.7.1 20
-      ALLOW_GLOBAL_PALBOX_IMPORT:2.7.1 false
+services:
+  palworld:
+    image: thijsvanloef/palworld-server-docker:latest
+    container_name: palworld
+    restart: unless-stopped
+    stop_grace_period: 30s
+    ports:
+      - ${PALWORLD_GAME_PORT:-8211}:8211/udp
+      - ${PALWORLD_QUERY_PORT:-27015}:27015/udp
+      - 8212:8212/tcp   # REST API - usage LAN uniquement. NE PAS forwarder ce port sur ta box/routeur.
+      - ${PALWORLD_RCON_PORT:-25575}:25575/tcp
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: ${TZ}
+      PORT: 8211
+      QUERY_PORT: 27015
+      PLAYERS: ${PALWORLD_PLAYERS:-16}
+      SERVER_NAME: ${PALWORLD_SERVER_NAME}
+      SERVER_DESCRIPTION: ${PALWORLD_SERVER_DESCRIPTION}
+      SERVER_PASSWORD: ${PALWORLD_SERVER_PASSWORD}
+      ADMIN_PASSWORD: ${PALWORLD_ADMIN_PASSWORD}
+      COMMUNITY: ${PALWORLD_COMMUNITY:-false}
+      CROSSPLAY_PLATFORMS: ${PALWORLD_CROSSPLAY_PLATFORMS:-(Steam,Xbox,PS5,Mac)}
+      BASE_CAMP_MAX_NUM_IN_GUILD: 12
+      BASE_CAMP_WORKER_MAX_NUM: 20
+      ALLOW_GLOBAL_PALBOX_IMPORT: false
 
       # API REST (utile pour l'auto-pause et le suivi des joueurs)
-      REST_API_ENABLED:2.7.1 true
-      REST_API_PORT:2.7.1 8212
-      ENABLE_PLAYER_LOGGING:2.7.1 true
-      PLAYER_LOGGING_POLL_PERIOD:2.7.1 5
+      REST_API_ENABLED: true
+      REST_API_PORT: 8212
+      ENABLE_PLAYER_LOGGING: true
+      PLAYER_LOGGING_POLL_PERIOD: 5
 
       # RCON (console d'admin à distance)
-      RCON_ENABLED:2.7.1 ${PALWORLD_RCON_ENABLED:2.7.1-false}
-      RCON_PORT:2.7.1 25575
+      RCON_ENABLED: ${PALWORLD_RCON_ENABLED:-false}
+      RCON_PORT: 28578
 
       # Sauvegardes automatiques
-      BACKUP_ENABLED:2.7.1 ${PALWORLD_BACKUP_ENABLED:2.7.1-true}
-      BACKUP_CRON_EXPRESSION:2.7.1 ${PALWORLD_BACKUP_CRON:2.7.1-0 */6 * * *}
-      DELETE_OLD_BACKUPS:2.7.1 true
-      OLD_BACKUP_DAYS:2.7.1 ${PALWORLD_OLD_BACKUP_DAYS:2.7.1-30}
+      BACKUP_ENABLED: ${PALWORLD_BACKUP_ENABLED:-true}
+      BACKUP_CRON_EXPRESSION: ${PALWORLD_BACKUP_CRON:-0 */6 * * *}
+      DELETE_OLD_BACKUPS: true
+      OLD_BACKUP_DAYS: ${PALWORLD_OLD_BACKUP_DAYS:-30}
 
       # Mises à jour / redémarrages / pause auto
-      AUTO_UPDATE_ENABLED:2.7.1 ${PALWORLD_AUTO_UPDATE_ENABLED:2.7.1-false}
-      AUTO_UPDATE_CRON_EXPRESSION:2.7.1 "0 4 * * *"
-      AUTO_REBOOT_ENABLED:2.7.1 ${PALWORLD_AUTO_REBOOT_ENABLED:2.7.1-false}
-      AUTO_REBOOT_CRON_EXPRESSION:2.7.1 "0 5 * * *"
-      AUTO_PAUSE_ENABLED:2.7.1 ${PALWORLD_AUTO_PAUSE_ENABLED:2.7.1-false}
-      AUTO_PAUSE_TIMEOUT_EST:2.7.1 180
+      AUTO_UPDATE_ENABLED: ${PALWORLD_AUTO_UPDATE_ENABLED:-false}
+      AUTO_UPDATE_CRON_EXPRESSION: "0 4 * * *"
+      AUTO_REBOOT_ENABLED: ${PALWORLD_AUTO_REBOOT_ENABLED:-false}
+      AUTO_REBOOT_CRON_EXPRESSION: "0 5 * * *"
+      AUTO_PAUSE_ENABLED: ${PALWORLD_AUTO_PAUSE_ENABLED:-false}
+      AUTO_PAUSE_TIMEOUT_EST: 180
 
       # Notifications Discord
-      DISCORD_WEBHOOK_URL:2.7.1 ${PALWORLD_DISCORD_WEBHOOK_URL}
-      DISCORD_SUPPRESS_NOTIFICATIONS:2.7.1 ${PALWORLD_DISCORD_SUPPRESS_NOTIFICATIONS:2.7.1-false}
-      DISCORD_PRE_START_MESSAGE_ENABLED:2.7.1 true
-      DISCORD_PRE_SHUTDOWN_MESSAGE_ENABLED:2.7.1 true
-      DISCORD_PLAYER_JOIN_MESSAGE_ENABLED:2.7.1 true
-      DISCORD_PLAYER_LEAVE_MESSAGE_ENABLED:2.7.1 true
-      DISCORD_PRE_UPDATE_BOOT_MESSAGE_ENABLED:2.7.1 true
-      DISCORD_POST_UPDATE_BOOT_MESSAGE_ENABLED:2.7.1 true
-      DISCORD_PRE_BACKUP_MESSAGE_ENABLED:2.7.1 false
-      DISCORD_POST_BACKUP_MESSAGE_ENABLED:2.7.1 false
-      DISCORD_ERR_BACKUP_DELETE_MESSAGE_ENABLED:2.7.1 true
-    volumes:2.7.1
-      - ${APP_DATA_DIR}/data:2.7.1/palworld/
-    x-runtipi:2.7.1
-      is_main:2.7.1 true
-      internal_port:2.7.1 8212
+      DISCORD_WEBHOOK_URL: ${PALWORLD_DISCORD_WEBHOOK_URL}
+      DISCORD_SUPPRESS_NOTIFICATIONS: ${PALWORLD_DISCORD_SUPPRESS_NOTIFICATIONS:-false}
+      DISCORD_PRE_START_MESSAGE_ENABLED: true
+      DISCORD_PRE_SHUTDOWN_MESSAGE_ENABLED: true
+      DISCORD_PLAYER_JOIN_MESSAGE_ENABLED: true
+      DISCORD_PLAYER_LEAVE_MESSAGE_ENABLED: true
+      DISCORD_PRE_UPDATE_BOOT_MESSAGE_ENABLED: true
+      DISCORD_POST_UPDATE_BOOT_MESSAGE_ENABLED: true
+      DISCORD_PRE_BACKUP_MESSAGE_ENABLED: false
+      DISCORD_POST_BACKUP_MESSAGE_ENABLED: false
+      DISCORD_ERR_BACKUP_DELETE_MESSAGE_ENABLED: true
+    volumes:
+      - ${APP_DATA_DIR}/data:/palworld/
+    x-runtipi:
+      is_main: true
+      internal_port: 8212
 
-x-runtipi:2.7.1
-  schema_version:2.7.1 2
-  dynamic_config:2.7.1 true
+x-runtipi:
+  schema_version: 2
+  dynamic_config: true
