@@ -34,7 +34,7 @@ services:
 
       # RCON (console d'admin à distance)
       RCON_ENABLED: ${PALWORLD_RCON_ENABLED:-false}
-      RCON_PORT: 28578
+      PALWORLD_RCON_PORT: 28578
 
       # Sauvegardes automatiques
       BACKUP_ENABLED: ${PALWORLD_BACKUP_ENABLED:-true}
