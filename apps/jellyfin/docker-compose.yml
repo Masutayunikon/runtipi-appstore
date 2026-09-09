@@ -1,8 +1,7 @@
-version: "3.7"
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:12.0
-    container_name: jellyfin
+    restart: "unless-stopped"
     volumes:
       - ${APP_DATA_DIR}/data/config:/config
       - ${ROOT_FOLDER_HOST}/media/data:/media/data
@@ -11,10 +10,9 @@ services:
       - PGID=1000
       - TZ=${TZ}
       - JELLYFIN_PublishedServerUrl=${APP_PROTOCOL:-http}://${APP_DOMAIN}/
-    restart: "unless-stopped"
+
     x-runtipi:
       is_main: true
       internal_port: 8096
-
 x-runtipi:
   schema_version: 2
