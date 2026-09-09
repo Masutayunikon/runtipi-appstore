@@ -1,27 +1,48 @@
 {
+  "schemaVersion": 2,
   "services": [
     {
       "name": "jellyfin",
       "image": "lscr.io/linuxserver/jellyfin:12.0",
-      "isMain": true,
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        },
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "JELLYFIN_PublishedServerUrl",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}/"
+        }
+      ],
       "internalPort": 8096,
-      "environment": {
-        "PUID": "1000",
-        "PGID": "1000",
-        "TZ": "${TZ}",
-        "JELLYFIN_PublishedServerUrl": "${APP_PROTOCOL:-http}://${APP_DOMAIN}/"
-      },
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/config",
-          "containerPath": "/config"
+          "containerPath": "/config",
+          "readOnly": false,
+          "shared": false,
+          "private": false
         },
         {
           "hostPath": "${ROOT_FOLDER_HOST}/media/data",
-          "containerPath": "/media/data"
+          "containerPath": "/media/data",
+          "readOnly": false,
+          "shared": false,
+          "private": false
         }
-      ]
+      ],
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
     }
-  ],
-  "$schema": "../dynamic-compose-schema.json"
+  ]
 }
