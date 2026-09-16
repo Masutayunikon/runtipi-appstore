@@ -11,8 +11,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${APP_DATA_DIR}/data:/app/data
-      - ${ROOT_FOLDER_HOST}/media/data/Kaï:/media/Kai
-      - ${ROOT_FOLDER_HOST}/media/torrents/complete:/downloads/complete
+      - ${ROOT_FOLDER_HOST}/media:/media
     restart: unless-stopped
     x-runtipi:
       is_main: true
