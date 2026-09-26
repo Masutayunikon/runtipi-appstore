@@ -6,8 +6,8 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "fankarr",
-  "tipi_version": 62,
-  "version": "3.24.1",
+  "tipi_version": 63,
+  "version": "3.25.0",
   "categories": [
     "media"
   ],
@@ -30,5 +30,5 @@
     "amd64"
   ],
   "created_at": 1772000000000,
-  "updated_at": 1789570258155
+  "updated_at": 1790420362766
 }
