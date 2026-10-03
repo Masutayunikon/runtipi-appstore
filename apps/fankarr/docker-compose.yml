@@ -1,6 +1,6 @@
 services:
   fankarr:
-    image: masutayunikon/fankarr:3.24.1
+    image: masutayunikon/fankarr:3.25.0
     environment:
       - PUID=1000
       - PGID=1000
