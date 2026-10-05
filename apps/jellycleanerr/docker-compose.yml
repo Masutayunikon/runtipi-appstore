@@ -1,6 +1,6 @@
 services:
   jellycleanerr:
-    image: ghcr.io/erwinrietveld/jellycleanerr:v1.1.1
+    image: ghcr.io/erwinrietveld/jellycleanerr:latest
     environment:
       - PUID=1000
       - PGID=1000
