@@ -6,8 +6,8 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "jellycleanerr",
-  "tipi_version": 1,
-  "version": "latest",
+  "tipi_version": 2,
+  "version": "1.1.1",
   "categories": [
     "media"
   ],
@@ -23,5 +23,5 @@
     "amd64"
   ],
   "created_at": 1772000000000,
-  "updated_at": 1789570258155
+  "updated_at": 1791633886958
 }
