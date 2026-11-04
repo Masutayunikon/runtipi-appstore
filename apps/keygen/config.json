@@ -34,46 +34,43 @@
     {
       "type": "text",
       "label": "Account UUID (minuscules)",
-      "hint": "UUID généré avec la commande uuidgen, en minuscules",
+      "hint": "UUID généré avec uuidgen, en minuscules",
+      "min": 36,
+      "max": 36,
       "required": true,
       "env_variable": "KEYGEN_ACCOUNT_ID"
     },
     {
-      "type": "random",
-      "label": "Secret Key Base",
-      "encoding": "hex",
+      "type": "password",
+      "label": "Secret Key Base (128 caractères hexadécimaux minimum)",
       "min": 128,
       "required": true,
       "env_variable": "SECRET_KEY_BASE"
     },
     {
-      "type": "random",
-      "label": "Encryption Deterministic Key",
-      "encoding": "base64",
+      "type": "password",
+      "label": "Encryption Deterministic Key (44 caractères minimum)",
       "min": 44,
       "required": true,
       "env_variable": "ENCRYPTION_DETERMINISTIC_KEY"
     },
     {
-      "type": "random",
-      "label": "Encryption Primary Key",
-      "encoding": "base64",
+      "type": "password",
+      "label": "Encryption Primary Key (44 caractères minimum)",
       "min": 44,
       "required": true,
       "env_variable": "ENCRYPTION_PRIMARY_KEY"
     },
     {
-      "type": "random",
-      "label": "Encryption Key Derivation Salt",
-      "encoding": "base64",
+      "type": "password",
+      "label": "Encryption Key Derivation Salt (44 caractères minimum)",
       "min": 44,
       "required": true,
       "env_variable": "ENCRYPTION_KEY_DERIVATION_SALT"
     },
     {
-      "type": "random",
-      "label": "PostgreSQL Password",
-      "encoding": "hex",
+      "type": "password",
+      "label": "PostgreSQL Password (48 caractères minimum)",
       "min": 48,
       "required": true,
       "env_variable": "POSTGRES_PASSWORD"
