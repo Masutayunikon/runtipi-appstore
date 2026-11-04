@@ -1,0 +1,121 @@
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keygen
+      POSTGRES_USER: keygen
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keygen -d keygen"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - ${APP_DATA_DIR}/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  keygen:
+    image: keygen/api:latest
+    restart: unless-stopped
+    command: ["web"]
+    environment:
+      KEYGEN_EDITION: CE
+      KEYGEN_MODE: singleplayer
+      KEYGEN_HOST: yunikon.keygen.fr
+      KEYGEN_ACCOUNT_ID: ${KEYGEN_ACCOUNT_ID}
+
+      KEYGEN_ADMIN_EMAIL: ${KEYGEN_ADMIN_EMAIL}
+      KEYGEN_ADMIN_PASSWORD: ${KEYGEN_ADMIN_PASSWORD}
+
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      ENCRYPTION_DETERMINISTIC_KEY: ${ENCRYPTION_DETERMINISTIC_KEY}
+      ENCRYPTION_PRIMARY_KEY: ${ENCRYPTION_PRIMARY_KEY}
+      ENCRYPTION_KEY_DERIVATION_SALT: ${ENCRYPTION_KEY_DERIVATION_SALT}
+
+      DATABASE_URL: postgres://keygen:${POSTGRES_PASSWORD}@postgres:5432/keygen
+      REDIS_URL: redis://redis:6379
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    volumes:
+      - ${APP_DATA_DIR}/keygen:/etc/keygen
+
+    x-runtipi:
+      is_main: true
+      internal_port: 3000
+
+  worker:
+    image: keygen/api:latest
+    restart: unless-stopped
+    command: ["worker"]
+    environment:
+      KEYGEN_EDITION: CE
+      KEYGEN_MODE: singleplayer
+      KEYGEN_HOST: yunikon.keygen.fr
+      KEYGEN_ACCOUNT_ID: ${KEYGEN_ACCOUNT_ID}
+
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      ENCRYPTION_DETERMINISTIC_KEY: ${ENCRYPTION_DETERMINISTIC_KEY}
+      ENCRYPTION_PRIMARY_KEY: ${ENCRYPTION_PRIMARY_KEY}
+      ENCRYPTION_KEY_DERIVATION_SALT: ${ENCRYPTION_KEY_DERIVATION_SALT}
+
+      DATABASE_URL: postgres://keygen:${POSTGRES_PASSWORD}@postgres:5432/keygen
+      REDIS_URL: redis://redis:6379
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    volumes:
+      - ${APP_DATA_DIR}/keygen:/etc/keygen
+
+  setup:
+    image: keygen/api:latest
+    profiles:
+      - setup
+    restart: "no"
+    command: ["setup"]
+    environment:
+      KEYGEN_EDITION: CE
+      KEYGEN_MODE: singleplayer
+      KEYGEN_HOST: yunikon.keygen.fr
+      KEYGEN_ACCOUNT_ID: ${KEYGEN_ACCOUNT_ID}
+
+      KEYGEN_ADMIN_EMAIL: ${KEYGEN_ADMIN_EMAIL}
+      KEYGEN_ADMIN_PASSWORD: ${KEYGEN_ADMIN_PASSWORD}
+
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      ENCRYPTION_DETERMINISTIC_KEY: ${ENCRYPTION_DETERMINISTIC_KEY}
+      ENCRYPTION_PRIMARY_KEY: ${ENCRYPTION_PRIMARY_KEY}
+      ENCRYPTION_KEY_DERIVATION_SALT: ${ENCRYPTION_KEY_DERIVATION_SALT}
+
+      DATABASE_URL: postgres://keygen:${POSTGRES_PASSWORD}@postgres:5432/keygen
+      REDIS_URL: redis://redis:6379
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,82 @@
+
+{
+  "name": "Keygen CE",
+  "id": "keygen",
+  "available": true,
+  "short_desc": "Self-hosted software license management",
+  "author": "Keygen",
+  "port": 7826,
+  "categories": ["utilities", "development"],
+  "description": "Keygen Community Edition - API de gestion, création et validation de licences logicielles.",
+  "tipi_version": 1,
+  "version": "1.0.0",
+  "source": "https://github.com/keygen-sh/keygen-api",
+  "website": "https://keygen.sh",
+  "exposable": true,
+  "force_expose": true,
+  "dynamic_config": true,
+  "supported_architectures": ["amd64"],
+  "min_tipi_version": "4.0.0",
+  "form_fields": [
+    {
+      "type": "email",
+      "label": "Email administrateur",
+      "required": true,
+      "env_variable": "KEYGEN_ADMIN_EMAIL"
+    },
+    {
+      "type": "password",
+      "label": "Mot de passe administrateur",
+      "min": 16,
+      "required": true,
+      "env_variable": "KEYGEN_ADMIN_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Account UUID (minuscules)",
+      "hint": "UUID généré avec la commande uuidgen, en minuscules",
+      "required": true,
+      "env_variable": "KEYGEN_ACCOUNT_ID"
+    },
+    {
+      "type": "random",
+      "label": "Secret Key Base",
+      "encoding": "hex",
+      "min": 128,
+      "required": true,
+      "env_variable": "SECRET_KEY_BASE"
+    },
+    {
+      "type": "random",
+      "label": "Encryption Deterministic Key",
+      "encoding": "base64",
+      "min": 44,
+      "required": true,
+      "env_variable": "ENCRYPTION_DETERMINISTIC_KEY"
+    },
+    {
+      "type": "random",
+      "label": "Encryption Primary Key",
+      "encoding": "base64",
+      "min": 44,
+      "required": true,
+      "env_variable": "ENCRYPTION_PRIMARY_KEY"
+    },
+    {
+      "type": "random",
+      "label": "Encryption Key Derivation Salt",
+      "encoding": "base64",
+      "min": 44,
+      "required": true,
+      "env_variable": "ENCRYPTION_KEY_DERIVATION_SALT"
+    },
+    {
+      "type": "random",
+      "label": "PostgreSQL Password",
+      "encoding": "hex",
+      "min": 48,
+      "required": true,
+      "env_variable": "POSTGRES_PASSWORD"
+    }
+  ]
+}
