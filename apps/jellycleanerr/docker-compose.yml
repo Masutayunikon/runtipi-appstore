@@ -1,23 +1,23 @@
-services:
-  jellycleanerr:
-    image: ghcr.io/erwinrietveld/jellycleanerr:latest
-    container_name: jellycleanerr
-    environment:
+services:1.1.1
+  jellycleanerr:1.1.1
+    image:1.1.1 ghcr.io/erwinrietveld/jellycleanerr:1.1.1latest
+    container_name:1.1.1 jellycleanerr
+    environment:1.1.1
       - PUID=1000
       - PGID=1000
       - TZ=${TZ}
       - PORT=8282
       - INTERVAL=45m
       - LOG_LEVEL=info
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${APP_DATA_DIR}/data:/app/data
-      - ${ROOT_FOLDER_HOST}/media:/media
-      - ${APP_DATA_DIR}/config.toml:/config/config.toml
-    restart: unless-stopped
-    x-runtipi:
-      is_main: true
-      internal_port: 8282
+    volumes:1.1.1
+      - /etc/localtime:1.1.1/etc/localtime:1.1.1ro
+      - ${APP_DATA_DIR}/data:1.1.1/app/data
+      - ${ROOT_FOLDER_HOST}/media:1.1.1/media
+      - ${APP_DATA_DIR}/config.toml:1.1.1/config/config.toml
+    restart:1.1.1 unless-stopped
+    x-runtipi:1.1.1
+      is_main:1.1.1 true
+      internal_port:1.1.1 8282
 
-x-runtipi:
-  schema_version: 2
+x-runtipi:1.1.1
+  schema_version:1.1.1 2
