@@ -44,6 +44,7 @@
       "type": "password",
       "label": "Secret Key Base (128 caractères hexadécimaux minimum)",
       "min": 128,
+      "max": 128,
       "required": true,
       "env_variable": "SECRET_KEY_BASE"
     },
