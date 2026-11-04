@@ -1,0 +1,107 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Keygate",
+  "id": "keygate",
+  "available": true,
+  "short_desc": "Open source software license server with Stripe billing.",
+  "author": "Tabloy",
+  "port": 8655,
+  "categories": ["development", "finance"],
+  "description": "Self-hosted software license management: subscriptions, perpetual licenses, trials, floating licenses, machine activations, usage metering and Stripe payments. A self-hosted alternative to Keygen, Cryptlex and LicenseSpring.",
+  "tipi_version": 1,
+  "version": "0.1.20",
+  "source": "https://github.com/tabloy/keygate",
+  "website": "https://keygate.app",
+  "exposable": true,
+  "dynamic_config": true,
+  "supported_architectures": ["amd64", "arm64"],
+  "min_tipi_version": "4.11.0",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Admin email(s)",
+      "hint": "Comma-separated. These addresses become admins on first login, and only they can complete first-run setup.",
+      "env_variable": "KEYGATE_ADMIN_EMAILS",
+      "required": true,
+      "min": 3,
+      "max": 1024
+    },
+    {
+      "type": "password",
+      "label": "Stripe secret key",
+      "hint": "sk_live_... or sk_test_... The Stripe webhook is created automatically, so the app must be exposed on a public HTTPS domain.",
+      "env_variable": "KEYGATE_STRIPE_SECRET_KEY",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "text",
+      "label": "SMTP host",
+      "hint": "Optional. Without SMTP, login codes are printed in the container logs.",
+      "env_variable": "KEYGATE_SMTP_HOST",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "number",
+      "label": "SMTP port",
+      "env_variable": "KEYGATE_SMTP_PORT",
+      "required": false,
+      "default": 587,
+      "min": 1,
+      "max": 65535
+    },
+    {
+      "type": "text",
+      "label": "SMTP username",
+      "env_variable": "KEYGATE_SMTP_USERNAME",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "password",
+      "label": "SMTP password",
+      "env_variable": "KEYGATE_SMTP_PASSWORD",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "text",
+      "label": "Sender (From)",
+      "hint": "e.g. noreply@example.com or My App <noreply@example.com>",
+      "env_variable": "KEYGATE_SMTP_FROM",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "random",
+      "label": "Database password",
+      "env_variable": "KEYGATE_DB_PASSWORD",
+      "min": 32,
+      "encoding": "hex"
+    },
+    {
+      "type": "random",
+      "label": "JWT secret",
+      "env_variable": "KEYGATE_JWT_SECRET",
+      "min": 64,
+      "encoding": "hex"
+    },
+    {
+      "type": "random",
+      "label": "License signing key (ed25519 seed)",
+      "env_variable": "KEYGATE_LICENSE_SIGNING_KEY",
+      "min": 64,
+      "encoding": "hex"
+    },
+    {
+      "type": "random",
+      "label": "Encryption key for secrets at rest",
+      "env_variable": "KEYGATE_ENCRYPTION_KEY",
+      "min": 64,
+      "encoding": "hex"
+    }
+  ],
+  "created_at": 1793836800000,
+  "updated_at": 1793836800000
+}

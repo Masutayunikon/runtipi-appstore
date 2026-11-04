@@ -1,0 +1,49 @@
+services:
+  keygate:
+    image: ghcr.io/tabloy/keygate:0.1.20
+    container_name: keygate
+    restart: unless-stopped
+    environment:
+      - PORT=9000
+      - ENVIRONMENT=production
+      - BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - DATABASE_URL=postgres://keygate:${KEYGATE_DB_PASSWORD}@keygate-db:5432/keygate?sslmode=disable
+      - JWT_SECRET=${KEYGATE_JWT_SECRET}
+      - LICENSE_SIGNING_KEY=${KEYGATE_LICENSE_SIGNING_KEY}
+      - RELEASE_KEY_ENCRYPTION_KEY=${KEYGATE_ENCRYPTION_KEY}
+      - ADMIN_EMAILS=${KEYGATE_ADMIN_EMAILS}
+      - STRIPE_SECRET_KEY=${KEYGATE_STRIPE_SECRET_KEY}
+      - SMTP_HOST=${KEYGATE_SMTP_HOST}
+      - SMTP_PORT=${KEYGATE_SMTP_PORT:-587}
+      - SMTP_USERNAME=${KEYGATE_SMTP_USERNAME}
+      - SMTP_PASSWORD=${KEYGATE_SMTP_PASSWORD}
+      - SMTP_FROM=${KEYGATE_SMTP_FROM}
+    depends_on:
+      keygate-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    x-runtipi:
+      internal_port: 9000
+      is_main: true
+
+  keygate-db:
+    image: postgres:18-alpine
+    container_name: keygate-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=keygate
+      - POSTGRES_PASSWORD=${KEYGATE_DB_PASSWORD}
+      - POSTGRES_DB=keygate
+    volumes:
+      # postgres 18+ expects the volume at /var/lib/postgresql (not .../data)
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keygate -d keygate"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
