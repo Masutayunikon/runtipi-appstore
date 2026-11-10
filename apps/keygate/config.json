@@ -11,7 +11,7 @@
     "finance"
   ],
   "description": "Self-hosted software license management: subscriptions, perpetual licenses, trials, floating licenses, machine activations, usage metering and Stripe payments. A self-hosted alternative to Keygen, Cryptlex and LicenseSpring.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "0.1.20",
   "source": "https://github.com/tabloy/keygate",
   "website": "https://keygate.app",
