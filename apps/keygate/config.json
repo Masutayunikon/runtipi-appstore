@@ -79,30 +79,101 @@
       "max": 1024
     },
     {
+      "type": "text",
+      "label": "Storage endpoint (S3)",
+      "hint": "Optional, for releases/downloads. Empty for AWS S3, https://<account>.r2.cloudflarestorage.com for Cloudflare R2, or your MinIO/Garage URL.",
+      "env_variable": "KEYGATE_STORAGE_ENDPOINT",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "text",
+      "label": "Storage region",
+      "hint": "auto for Cloudflare R2, the bucket region for AWS S3.",
+      "env_variable": "KEYGATE_STORAGE_REGION",
+      "required": false,
+      "default": "auto",
+      "max": 128
+    },
+    {
+      "type": "text",
+      "label": "Storage bucket",
+      "hint": "Bucket, access key and secret key must all be set together (or all empty to disable releases).",
+      "env_variable": "KEYGATE_STORAGE_BUCKET",
+      "required": false,
+      "max": 255
+    },
+    {
+      "type": "text",
+      "label": "Storage access key",
+      "env_variable": "KEYGATE_STORAGE_ACCESS_KEY",
+      "required": false,
+      "max": 1024
+    },
+    {
       "type": "password",
-      "label": "Database password",
+      "label": "Storage secret key",
+      "env_variable": "KEYGATE_STORAGE_SECRET_KEY",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "url",
+      "label": "Storage public domain",
+      "hint": "Optional. Custom domain / CDN in front of the bucket, e.g. https://downloads.example.com",
+      "env_variable": "KEYGATE_STORAGE_PUBLIC_URL",
+      "required": false,
+      "max": 1024
+    },
+    {
+      "type": "boolean",
+      "label": "Force path-style URLs",
+      "hint": "Enable for MinIO, Garage and most self-hosted S3. Leave off for R2 / AWS.",
+      "env_variable": "KEYGATE_STORAGE_FORCE_PATH_STYLE",
+      "required": false,
+      "default": false
+    },
+    {
+      "type": "password",
+      "label": "Mot de passe PostgreSQL",
+      "hint": "Générer avec : openssl rand -hex 24",
+      "min": 32,
+      "required": true,
       "env_variable": "KEYGATE_DB_PASSWORD",
-      "min": 32
+      "regex": "^[0-9a-zA-Z]+$",
+      "pattern_error": "Lettres et chiffres uniquement (il est mis dans une URL)"
     },
     {
       "type": "password",
       "label": "JWT secret",
-      "env_variable": "KEYGATE_JWT_SECRET",
-      "min": 64
+      "hint": "Générer avec : openssl rand -hex 32",
+      "min": 32,
+      "required": true,
+      "env_variable": "KEYGATE_JWT_SECRET"
     },
     {
       "type": "password",
-      "label": "License signing key (ed25519 seed)",
+      "label": "Clé de signature des licences (ed25519)",
+      "hint": "Générer avec : openssl rand -hex 32. Ne jamais la changer ensuite : toutes les licences émises deviendraient invalides.",
+      "min": 64,
+      "max": 64,
+      "required": true,
       "env_variable": "KEYGATE_LICENSE_SIGNING_KEY",
-      "min": 64
+      "regex": "^[0-9a-fA-F]{64}$",
+      "pattern_error": "64 caractères hexadécimaux exactement (openssl rand -hex 32)"
     },
     {
       "type": "password",
-      "label": "Encryption key for secrets at rest",
+      "label": "Clé de chiffrement (RELEASE_KEY_ENCRYPTION_KEY)",
+      "hint": "Générer avec : openssl rand -hex 32. Ne jamais la changer ensuite.",
+      "min": 64,
+      "max": 64,
+      "required": true,
       "env_variable": "KEYGATE_ENCRYPTION_KEY",
-      "min": 64
+      "regex": "^[0-9a-fA-F]{64}$",
+      "pattern_error": "64 caractères hexadécimaux exactement (openssl rand -hex 32)"
     }
   ],
   "created_at": 1793832611455,
-  "updated_at": 1793832611455
+  "updated_at": 1794275509524
 }
