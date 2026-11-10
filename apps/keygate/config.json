@@ -79,25 +79,25 @@
       "max": 1024
     },
     {
-      "type": "random",
+      "type": "password",
       "label": "Database password",
       "env_variable": "KEYGATE_DB_PASSWORD",
       "min": 32
     },
     {
-      "type": "random",
+      "type": "password",
       "label": "JWT secret",
       "env_variable": "KEYGATE_JWT_SECRET",
       "min": 64
     },
     {
-      "type": "random",
+      "type": "password",
       "label": "License signing key (ed25519 seed)",
       "env_variable": "KEYGATE_LICENSE_SIGNING_KEY",
       "min": 64
     },
     {
-      "type": "random",
+      "type": "password",
       "label": "Encryption key for secrets at rest",
       "env_variable": "KEYGATE_ENCRYPTION_KEY",
       "min": 64
